@@ -90,7 +90,6 @@ class LineAppender(s: String = ""): DelimiterAppender(s) {
 }
 
 
-
 fun Int.prependZeros(untilNumDigits: Int): String {
   var s = this.toString()
   while (s.length < untilNumDigits) {
@@ -229,6 +228,9 @@ fun <T> Array<T>.joinWithNewLinesAndTabs(op: ((T)->CharSequence)? = null) =
 
 fun <T> Iterable<T>.strings() = map { it.toString() }
 fun <T> Array<T>.strings() = map { it.toString() }.toTypedArray()
+
+fun <T> Iterable<T>.elementsToString() = joinToString(prefix = "[", postfix = "]", separator = ",")
+fun <T> Array<T>.elementsToString() = joinToString(prefix = "[", postfix = "]", separator = ",")
 
 
 operator fun String.times(n: Int): String {
