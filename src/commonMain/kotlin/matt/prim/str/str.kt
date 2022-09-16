@@ -242,6 +242,15 @@ operator fun String.times(n: Int): String {
   }
   return r
 }
+operator fun Char.times(n: Int): String {
+  require(n >= 0)
+  if (n == 0) return ""
+  var r = ""
+  repeat(n) {
+	r += this
+  }
+  return r
+}
 
 fun String.hyphonizedToCamelCase() = when {
   "-" !in this -> this
