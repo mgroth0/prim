@@ -1,13 +1,10 @@
 package matt.prim.str
 
-import matt.lang.cap
-import matt.lang.err
-
 fun String.lineIndexOfIndex(i: Int): Int {
 
-  if (length == 0) {
+  if (isEmpty()) {
 	if (i == 0) return 0
-	else err("no")
+	else error("no")
   }
   lineSequence().fold(-1 to -1) { acc: Pair<Int, Int>, line: String ->
 	val next = (acc.first + 1) to (acc.second + line.length + 1)
@@ -16,7 +13,7 @@ fun String.lineIndexOfIndex(i: Int): Int {
 	}
 	next
   }
-  err("index too high")
+  error("index too high")
 }
 
 fun String.lineNumOfIndex(i: Int) = lineIndexOfIndex(i) + 1
@@ -27,12 +24,12 @@ val isKotlin1_4OrEarlier by lazy { KotlinVersion.CURRENT.major <= 1 && KotlinVer
 object CharCheck {
   init {
 	if (isKotlin1_4OrEarlier) {
-	  err("OPPOSITE OF THE FOLLOWING")    /*if (KotlinVersion.CURRENT.isAtLeast(1, 5)) {*/
-	  err("delete Char.code below")
-	  err("update decap")
-	  err("update cap")
-	  err("update lower")
-	  err("update upper")
+	  error("OPPOSITE OF THE FOLLOWING")    /*if (KotlinVersion.CURRENT.isAtLeast(1, 5)) {*/
+	  error("delete Char.code below")
+	  error("update decap")
+	  error("update cap")
+	  error("update lower")
+	  error("update upper")
 	}
   }
 }
@@ -133,7 +130,7 @@ fun String.substringAfterIth(c: Char, num: Number): String {
 		println("not returning")
 	  }
 	}
-	err("should never get here")
+	error("should never get here")
   }
 }
 
@@ -242,6 +239,7 @@ operator fun String.times(n: Int): String {
   }
   return r
 }
+
 operator fun Char.times(n: Int): String {
   require(n >= 0)
   if (n == 0) return ""
@@ -269,3 +267,15 @@ fun String.isInt() = toIntOrNull() != null
 fun String.isBoolean() = toBooleanStrictOrNull() != null
 fun String.isDouble() = toDoubleOrNull() != null
 fun String.isFloat() = toFloatOrNull() != null
+
+/*kinda how JetBrains wants us to do it*/
+fun String.cap() =
+  replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+/*if I go back to 1.4: this.capitalize()*/
+
+
+/*kinda how JetBrains wants us to do it*/
+fun String.decap() =
+  replaceFirstChar { it.lowercase() }
+/*if I go back to 1.4: this.decapitalize()*/
+
