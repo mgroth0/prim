@@ -103,6 +103,15 @@ fun String.addSpacesUntilLengthIs(n: Int): String {
   return s
 }
 
+fun String.addNewLinesUntilNumLinesIs(n: Int): String {
+  var s = this
+  while (s.lines().count() < n) {
+	s += "\n"
+  }
+  return s
+}
+
+
 val DOWN_ARROW = "↓"
 val UP_ARROW = "↑"
 
