@@ -239,6 +239,9 @@ fun <T> Iterable<T>.elementsToString() = joinToString(prefix = "[", postfix = "]
 fun <T> Array<T>.elementsToString() = joinToString(prefix = "[", postfix = "]", separator = ",")
 
 
+fun <T> Iterable<T>.joinWithBars(op: ((T)->CharSequence)? = null) = joinToString(" | ", transform = op)
+
+
 operator fun String.times(n: Int): String {
   require(n >= 0)
   if (n == 0) return ""
