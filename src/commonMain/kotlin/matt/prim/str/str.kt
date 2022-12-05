@@ -95,10 +95,16 @@ fun Int.prependZeros(untilNumDigits: Int): String {
   return s
 }
 
-fun String.addSpacesUntilLengthIs(n: Int): String {
+fun String.addSpacesUntilLengthIs(n: Int, prepend: Boolean = false): String {
   var s = this
-  while (s.length < n) {
-	s += " "
+  if (prepend) {
+	while (s.length < n) {
+	  s = " " + s
+	}
+  } else {
+	while (s.length < n) {
+	  s += " "
+	}
   }
   return s
 }
@@ -243,7 +249,9 @@ fun <T> Iterable<T>.joinWithBars(op: ((T)->CharSequence)? = null) = joinToString
 
 
 operator fun String.times(n: Int): String {
-  require(n >= 0)
+  require(n >= 0) {
+	"tried to multiply string by negative number ($n)"
+  }
   if (n == 0) return ""
   var r = ""
   repeat(n) {

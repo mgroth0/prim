@@ -1,6 +1,17 @@
 package matt.prim.byte
 
+import matt.prim.byte.hex.toHex
 import kotlin.jvm.JvmInline
+
+fun ByteArray.reasonablePrintableString(): String {
+  return when {
+	size == 0 -> "empty ByteArray"
+	size == 1 -> "ByteArray[${first().bits}]"
+	size <= 8 -> "ByteArray[${joinToString("") { it.toHex() }}]"
+	else      -> "bytearray with size=$size"
+  }
+}
+
 
 inline val Byte.bits get() = Bits(this)
 
@@ -27,7 +38,11 @@ object Down: Bit() {
   }
 
   private fun getBit(value: Int, position: Int): Int {
-	return (value shr position) and 1;
+	return (value shr position) and 1
   }
+
+  override fun toString() = iterator().asSequence().toList().joinToString("")
+
 }
+
 
