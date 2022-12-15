@@ -223,6 +223,8 @@ val NEW_LINE_STRINGS = listOf("\r\n", "\n", "\r")
 fun <T> Iterable<T>.concat(op: ((T)->CharSequence)? = null) = joinToString("", transform = op)
 fun <T> Array<T>.concat(op: ((T)->CharSequence)? = null) = joinToString("", transform = op)
 
+
+
 fun <T> Iterable<T>.joinWithSpaces(op: ((T)->CharSequence)? = null) = joinToString(" ", transform = op)
 fun <T> Array<T>.joinWithSpaces(op: ((T)->CharSequence)? = null) = joinToString(" ", transform = op)
 
@@ -301,3 +303,6 @@ fun String.decap() =
 
 
 fun String.numberOf(char: Char) = count { it == char }
+
+
+
