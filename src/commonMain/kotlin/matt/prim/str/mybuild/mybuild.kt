@@ -40,6 +40,12 @@ class MyStringDSL: StringDSL {
 	subDSL.apply(op)
 	+subDSL.string
   }
+  fun lineDelimited(op: MyStringDSL.()->Unit) {
+	val subDSL = MyStringDSL()
+	subDSL.delimiter = "\n"
+	subDSL.apply(op)
+	+subDSL.string
+  }
 
   fun parenthesis(op: MyStringDSL.()->Unit) {
 	val subDSL = MyStringDSL()
