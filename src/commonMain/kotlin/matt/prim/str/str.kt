@@ -224,7 +224,6 @@ fun <T> Iterable<T>.concat(op: ((T)->CharSequence)? = null) = joinToString("", t
 fun <T> Array<T>.concat(op: ((T)->CharSequence)? = null) = joinToString("", transform = op)
 
 
-
 fun <T> Iterable<T>.joinWithSpaces(op: ((T)->CharSequence)? = null) = joinToString(" ", transform = op)
 fun <T> Array<T>.joinWithSpaces(op: ((T)->CharSequence)? = null) = joinToString(" ", transform = op)
 
@@ -272,13 +271,15 @@ operator fun Char.times(n: Int): String {
   return r
 }
 
-fun String.hyphonizedToCamelCase() = when {
-  "-" !in this -> this
-  else         -> split("-").let {
+fun String.hyphenatedToCamelCase() = replaceWithCamelHumps('-')
+
+fun String.replaceWithCamelHumps(delim: Char) = when (delim) {
+  !in this -> this
+  else     -> split(delim).let {
 	var r = ""
 	it.forEachIndexed { index, s ->
-	  if (index == 0) r += s
-	  else r += s.cap()
+	  r += if (index == 0) s
+	  else s.cap()
 	}
 	r
   }
