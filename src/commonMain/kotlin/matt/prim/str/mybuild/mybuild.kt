@@ -1,7 +1,6 @@
 package matt.prim.str.mybuild
 
 
-
 @DslMarker
 annotation class StringDslMarker
 
@@ -30,16 +29,18 @@ class MyStringDSL: StringDSL {
   }
 
 
+  fun blankLine() {
+	+"\n"
+  }
 
-
-
-  fun words(op: MyStringDSL.() -> Unit) = spaceDelimited(op)
+  fun words(op: MyStringDSL.()->Unit) = spaceDelimited(op)
   fun spaceDelimited(op: MyStringDSL.()->Unit) {
 	val subDSL = MyStringDSL()
 	subDSL.delimiter = " "
 	subDSL.apply(op)
 	+subDSL.string
   }
+
   fun lineDelimited(op: MyStringDSL.()->Unit) {
 	val subDSL = MyStringDSL()
 	subDSL.delimiter = "\n"
