@@ -3,6 +3,10 @@ package matt.prim.str
 import matt.prim.str.mybuild.string
 import kotlin.random.Random
 
+fun String.shuffled(rand: Random = Random): String {
+  return toList().shuffled(rand).joinToString(separator = "") { it.toString() }
+}
+
 fun String.incEach(): String {
   return string {
 	forEach {
