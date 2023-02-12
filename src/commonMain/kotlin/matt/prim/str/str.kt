@@ -1,5 +1,20 @@
 package matt.prim.str
 
+import matt.prim.str.mybuild.string
+import kotlin.random.Random
+
+fun String.incEach(): String {
+  return string {
+	forEach {
+	  +it.inc().toString()
+	}
+  }
+}
+
+fun String.insertRandomly(char: Char, rand: Random = Random): String {
+  return StringBuilder(this).insert(rand.nextInt(0, length), char).toString()
+}
+
 fun String.lineIndexOfIndex(i: Int): Int {
 
   if (isEmpty()) {
