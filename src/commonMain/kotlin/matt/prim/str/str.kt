@@ -3,6 +3,8 @@ package matt.prim.str
 import matt.prim.str.mybuild.string
 import kotlin.random.Random
 
+fun String.removePrefixAndOrSuffix(s: String) = removePrefix(s).removeSuffix(s)
+
 fun String.remove(s: String) = replace(s, "")
 
 fun String.shuffled(rand: Random = Random): String {
