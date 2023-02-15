@@ -1,10 +1,14 @@
+@file:JvmName("StrJvmKt")
+
 package matt.prim.str
 
 import matt.prim.str.mybuild.string
+import kotlin.jvm.JvmName
 import kotlin.random.Random
 
 fun String.ensurePrefix(s: String) = removePrefix(s) + s
 fun String.ensureSuffix(s: String) = removeSuffix(s) + s
+
 
 fun String.urlEncode() = replace(' '.toString(), "%20")
 
