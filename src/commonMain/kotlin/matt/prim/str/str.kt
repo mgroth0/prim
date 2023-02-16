@@ -10,7 +10,6 @@ fun String.ensurePrefix(s: String) = removePrefix(s) + s
 fun String.ensureSuffix(s: String) = removeSuffix(s) + s
 
 
-fun String.urlEncode() = replace(' '.toString(), "%20")
 
 fun String.removePrefixAndOrSuffix(s: String) = removePrefix(s).removeSuffix(s)
 
