@@ -10,8 +10,26 @@ fun String.ensurePrefix(s: String) = removePrefix(s) + s
 fun String.ensureSuffix(s: String) = removeSuffix(s) + s
 
 
-
 fun String.removePrefixAndOrSuffix(s: String) = removePrefix(s).removeSuffix(s)
+
+fun String.replaceLastChar(new: String): String {
+  return replaceAt(indices.last, new)
+}
+
+fun String.replaceAt(index: Int, new: String): String {
+  require(index in indices)
+  val before = if (index == 0) {
+	""
+  } else {
+	substring(0 until index)
+  }
+  val after = if (index == indices.last) {
+	""
+  } else {
+	substring(index + 1..indices.last)
+  }
+  return before + new + after
+}
 
 fun String.remove(s: String) = replace(s, "")
 
