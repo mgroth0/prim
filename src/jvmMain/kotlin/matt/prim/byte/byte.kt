@@ -9,6 +9,7 @@ import java.nio.ByteBuffer
 import java.nio.channels.Channels
 import java.nio.channels.ReadableByteChannel
 import java.nio.channels.WritableByteChannel
+import java.util.Base64
 
 
 fun ByteArray.toInt() = ByteBuffer.wrap(this).int
@@ -38,3 +39,9 @@ fun ReadableByteChannel.efficientlyTransferTo(out: WritableByteChannel) {
 	out.write(buffer)
   }
 }
+
+fun ByteArray.encodeToBase64() = Base64.getEncoder().encodeToString(this)
+
+
+fun ByteArray.encodeToURLBase64() = Base64.getUrlEncoder().encodeToString(this)
+fun ByteArray.decodeFromURLBase64() = Base64.getUrlDecoder().decode(this)
