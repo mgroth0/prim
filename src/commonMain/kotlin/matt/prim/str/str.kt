@@ -6,6 +6,15 @@ import matt.prim.str.mybuild.string
 import kotlin.jvm.JvmName
 import kotlin.random.Random
 
+fun randomAlphanumericString(length: Int, random: Random = Random): String {
+  val candidates = ALPHABET + ALPHABET.map { it.lowercaseChar() } + (0..9).map { it.toString().toCharArray().first() }
+  var r = ""
+  repeat(length) {
+	r += candidates.random(random)
+  }
+  return r
+}
+
 fun String.ensurePrefix(s: String) = removePrefix(s) + s
 fun String.ensureSuffix(s: String) = removeSuffix(s) + s
 
