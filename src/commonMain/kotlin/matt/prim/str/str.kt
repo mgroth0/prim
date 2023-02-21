@@ -239,6 +239,14 @@ fun String.truncateWithElipsesOrAddSpaces(exactNumChars: Int): String {
   else return this.substring(0, numCharsBeforeElipses) + elipses
 }
 
+
+fun String.truncateWithElipsesOrAddSpacesAsNeeded(allowableLengths: IntRange): String {
+  return if (this.length in allowableLengths) this
+  else if (this.length < allowableLengths.first) truncateWithElipsesOrAddSpaces(allowableLengths.first)
+  else truncateWithElipsesOrAddSpaces(allowableLengths.last)
+}
+
+
 val ALPHABET = arrayOf(
   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
   'X', 'Y', 'Z'
