@@ -6,6 +6,10 @@ import matt.prim.str.mybuild.string
 import kotlin.jvm.JvmName
 import kotlin.random.Random
 
+fun maybePlural(count: Int, noun: String): String {
+  return if (count == 1) noun else "${noun}s"
+}
+
 fun randomAlphanumericString(length: Int, random: Random = Random): String {
   val candidates = ALPHABET + ALPHABET.map { it.lowercaseChar() } + (0..9).map { it.toString().toCharArray().first() }
   var r = ""
