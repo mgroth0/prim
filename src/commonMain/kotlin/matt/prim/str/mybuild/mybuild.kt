@@ -34,19 +34,21 @@ class MyStringDSL: StringDSL {
   }
 
   fun words(op: MyStringDSL.()->Unit) = spaceDelimited(op)
-  fun spaceDelimited(op: MyStringDSL.()->Unit) {
+
+
+  fun delimited(tempDelim: Char, op: MyStringDSL.()->Unit) = delimited(tempDelim.toString(), op)
+  fun delimited(tempDelim: String, op: MyStringDSL.()->Unit) {
 	val subDSL = MyStringDSL()
-	subDSL.delimiter = " "
+	subDSL.delimiter = tempDelim
 	subDSL.apply(op)
 	+subDSL.string
   }
 
-  fun lineDelimited(op: MyStringDSL.()->Unit) {
-	val subDSL = MyStringDSL()
-	subDSL.delimiter = "\n"
-	subDSL.apply(op)
-	+subDSL.string
-  }
+  fun spaceDelimited(op: MyStringDSL.()->Unit) = delimited(' ', op)
+  fun lineDelimited(op: MyStringDSL.()->Unit) = delimited('\n', op)
+  fun tabDelimited(op: MyStringDSL.()->Unit) = delimited('\t', op)
+  fun commaDelimited(op: MyStringDSL.()->Unit) = delimited(',', op)
+
 
   fun parenthesis(op: MyStringDSL.()->Unit) {
 	val subDSL = MyStringDSL()
