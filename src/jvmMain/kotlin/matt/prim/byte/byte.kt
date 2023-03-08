@@ -41,8 +41,7 @@ fun ReadableByteChannel.efficientlyTransferTo(out: WritableByteChannel) {
 }
 
 fun ByteArray.encodeToBase64() = Base64.getEncoder().encodeToString(this)
-
-
+fun ByteArray.decodeFromBase64() = Base64.getDecoder().decode(this)
 
 
 fun ByteArray.encodeToURLBase64() = Base64.getUrlEncoder().encodeToString(this)
