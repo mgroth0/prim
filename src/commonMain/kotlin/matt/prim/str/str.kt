@@ -300,6 +300,9 @@ fun <T> Array<T>.joinWithSpaces(op: ((T)->CharSequence)? = null) = joinToString(
 fun <T> Iterable<T>.joinWithCommas(op: ((T)->CharSequence)? = null) = joinToString(",", transform = op)
 fun <T> Array<T>.joinWithCommas(op: ((T)->CharSequence)? = null) = joinToString(",", transform = op)
 
+fun <T> Iterable<T>.joinWithPeriods(op: ((T)->CharSequence)? = null) = joinToString(".", transform = op)
+fun <T> Array<T>.joinWithPeriods(op: ((T)->CharSequence)? = null) = joinToString(".", transform = op)
+
 fun <T> Iterable<T>.joinWithNewLines(op: ((T)->CharSequence)? = null) = joinToString("\n", transform = op)
 fun <T> Array<T>.joinWithNewLines(op: ((T)->CharSequence)? = null) = joinToString("\n", transform = op)
 
