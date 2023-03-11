@@ -6,6 +6,10 @@ import matt.prim.str.mybuild.string
 import kotlin.jvm.JvmName
 import kotlin.random.Random
 
+/*like python!*/
+fun <T> String.join(itr: Iterable<T>, op: (T)->String = { it.toString() }) =
+  itr.joinToString(separator = this) { op(it) }
+
 fun maybePlural(count: Int, noun: String): String {
   return if (count == 1) noun else "${noun}s"
 }
