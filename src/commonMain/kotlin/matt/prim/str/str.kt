@@ -286,6 +286,7 @@ class StringLineBuilder(private var s: String) {
 }
 
 fun <T> T?.orBlank(op: (T)->String = { toString() }) = this?.let { op(it) } ?: ""
+fun String.takeIfNotBlank() = takeIf { isNotBlank() }
 
 
 val NEW_LINE_CHARS = listOf('\n', '\r')
