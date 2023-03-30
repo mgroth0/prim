@@ -4,6 +4,8 @@ import kotlin.experimental.and
 
 private val hexArray = "0123456789ABCDEF".toCharArray()
 
+/*RELATED TO matt.prim.base64. TODO: They structured together*/
+
 fun ByteArray.toHex() = joinToString("") { it.toHex() }
 
 fun Byte.toHex(): String {
