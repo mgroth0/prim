@@ -50,6 +50,14 @@ fun String.replaceAt(index: Int, new: String): String {
 
 fun String.remove(s: String) = replace(s, "")
 
+fun String.remove(vararg chars: Char) = run {
+    var r = this
+    chars.forEach {
+        r.replace(it.toString(), "")
+    }
+    r
+}
+
 fun String.shuffled(rand: Random = Random): String {
     return toList().shuffled(rand).joinToString(separator = "") { it.toString() }
 }
