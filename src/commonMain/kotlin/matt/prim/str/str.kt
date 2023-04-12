@@ -53,7 +53,7 @@ fun String.remove(s: String) = replace(s, "")
 fun String.remove(vararg chars: Char) = run {
     var r = this
     chars.forEach {
-        r.replace(it.toString(), "")
+        r = r.replace(it.toString(), "")
     }
     r
 }
