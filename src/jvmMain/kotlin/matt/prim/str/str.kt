@@ -4,7 +4,8 @@ import java.net.URLEncoder
 
 /*https://stackoverflow.com/questions/4737841/urlencoder-not-able-to-translate-space-character*/
 fun String.urlEncode() = URLEncoder.encode(
-  this, Charsets.UTF_8
+    this, Charsets.UTF_8
 ).replace("+", "%20")
 
 
+//actual fun String.toByteArrayCommon() = encodeToByteArray()

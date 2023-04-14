@@ -400,4 +400,6 @@ fun String.decap() =
 fun String.numberOf(char: Char) = count { it == char }
 
 
+fun String.toByteArrayCommon() = encodeToByteArray()
+
 
