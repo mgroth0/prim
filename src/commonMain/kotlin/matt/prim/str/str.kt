@@ -365,6 +365,35 @@ operator fun Char.times(n: Int): String {
     return r
 }
 
+fun String.splitCamelCase(): List<String> {
+
+    if (this.isBlank()) {
+        error("how would I split camel case of a blank string?")
+    } else if (this.hasWhiteSpace) {
+        error("how would I split camel case of a string with whitespace?")
+    }
+
+
+    val r = mutableListOf<String>()
+    var s = ""
+
+    forEach {
+        if (it.isLetter()) {
+            if (it.isUpperCase()) {
+                r += s
+                s = ""
+                s += it
+            } else {
+                s += it
+            }
+        } else {
+            error("character $it in string \"${this}\" is not a letter")
+        }
+    }
+    r += s
+    return r
+}
+
 fun String.hyphenatedToCamelCase() = replaceWithCamelHumps('-')
 
 fun String.replaceWithCamelHumps(delim: Char) = when (delim) {
