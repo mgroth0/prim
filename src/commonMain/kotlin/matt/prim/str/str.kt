@@ -6,6 +6,10 @@ import matt.prim.str.mybuild.string
 import kotlin.jvm.JvmName
 import kotlin.random.Random
 
+fun String.containsAny(vararg strings: String): Boolean {
+    return strings.any { contains(it) }
+}
+
 /*like python!*/
 fun <T> String.join(itr: Iterable<T>, op: (T) -> String = { it.toString() }) =
     itr.joinToString(separator = this) { op(it) }
@@ -398,7 +402,7 @@ fun String.hyphenatedToCamelCase() = replaceWithCamelHumps('-')
 
 fun String.replaceWithCamelHumps(delim: Char) = when (delim) {
     !in this -> this
-    else -> split(delim).let {
+    else     -> split(delim).let {
         var r = ""
         it.forEachIndexed { index, s ->
             r += if (index == 0) s
