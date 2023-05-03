@@ -1,17 +1,17 @@
 {
-  "type" :         "MultiPlatformModule",
-  "jvm" :          {},
-  "js" :           "LIB",
-  "dependencies" : [
-	{
-	  "type" : "Lib",
-	  "cfg" :  "commonMainApi",
-	  "key" :  "kt-stdlib"
-	},
-	{
-	  "type" : "Lib",
-	  "cfg" :  "jsMainApi",
-	  "key" :  "kt-stdlib-js"
-	}
+  "type": "MultiPlatformModule",
+  "jvm": {},
+  "js": "LIB",
+  "dependencies": [
+    {
+      "type": "Lib",
+      "cfg": "commonMainApi",
+      "key": "kt-stdlib"
+    },
+    {
+      "type": "Lib",
+      "cfg": "jsMainApi",
+      "key": "kt-stdlib-js"
+    }
   ]
 }
