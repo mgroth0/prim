@@ -11,6 +11,7 @@ import java.nio.channels.ReadableByteChannel
 import java.nio.channels.WritableByteChannel
 
 
+fun ByteArray.toShort() = ByteBuffer.wrap(this).short
 fun ByteArray.toInt() = ByteBuffer.wrap(this).int
 fun ByteArray.toLong() = ByteBuffer.wrap(this).long
 fun ByteArray.toFloat() = ByteBuffer.wrap(this).float
@@ -27,14 +28,14 @@ fun InputStream.efficientlyTransferTo(out: WritableByteChannel) = Channels.newCh
 *  https://thomaswabner.wordpress.com/2007/10/09/fast-stream-copy-using-javanio-channels/
 * */
 fun ReadableByteChannel.efficientlyTransferTo(out: WritableByteChannel) {
-  val buffer: ByteBuffer = ByteBuffer.allocateDirect(16*1024)
-  while (this.read(buffer) != -1) {
-	buffer.flip()
-	out.write(buffer)
-	buffer.compact()
-  }
-  buffer.flip()
-  while (buffer.hasRemaining()) {
-	out.write(buffer)
-  }
+    val buffer: ByteBuffer = ByteBuffer.allocateDirect(16 * 1024)
+    while (this.read(buffer) != -1) {
+        buffer.flip()
+        out.write(buffer)
+        buffer.compact()
+    }
+    buffer.flip()
+    while (buffer.hasRemaining()) {
+        out.write(buffer)
+    }
 }

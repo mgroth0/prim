@@ -12,6 +12,11 @@
       "type": "Lib",
       "cfg": "jsMainApi",
       "key": "kt-stdlib-js"
+    },
+    {
+      "type": "Project",
+      "cfg": "commonMainImplementation",
+      "path": ":k:lang"
     }
   ]
 }
