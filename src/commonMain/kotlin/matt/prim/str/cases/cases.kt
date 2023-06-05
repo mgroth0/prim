@@ -1,6 +1,7 @@
 package matt.prim.str.cases
 
 import matt.lang.anno.SeeURL
+import matt.prim.str.CAPITAL_LETTER
 import matt.prim.str.cap
 import matt.prim.str.decap
 import matt.prim.str.hasWhiteSpace
@@ -155,3 +156,9 @@ fun String.snakeCaseToCamelCase(): String {
     }
 }
 
+
+
+fun String.hyphenize(): String =
+    replace(CAPITAL_LETTER) {
+        "-${it.value.lowercase()}"
+    }

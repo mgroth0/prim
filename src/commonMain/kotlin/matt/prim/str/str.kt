@@ -187,6 +187,22 @@ fun String.addSpacesUntilLengthIs(n: Int, prepend: Boolean = false): String {
     return s
 }
 
+
+fun String.addSpacesEvenlyUntilLengthIs(n: Int): String {
+    var prepend = false
+    var s = this
+    while (s.length < n) {
+        if (prepend) {
+            s = " $s"
+        } else {
+            s += " "
+        }
+        prepend = !prepend
+    }
+
+    return s
+}
+
 fun String.addNewLinesUntilNumLinesIs(n: Int): String {
     var s = this
     while (s.lines().count() < n) {
@@ -250,6 +266,12 @@ fun String.truncateOrAddSpaces(exactNumChars: Int): String {
     if (length <= exactNumChars) return this.addSpacesUntilLengthIs(exactNumChars)
     else return this.substring(0, exactNumChars)
 }
+
+fun String.truncateOrCenterInSpaces(exactNumChars: Int): String {
+    if (length <= exactNumChars) return this.addSpacesEvenlyUntilLengthIs(exactNumChars)
+    else return this.substring(0, exactNumChars)
+}
+
 
 const val elipses = " ..."
 fun String.truncateWithElipsesOrAddSpaces(exactNumChars: Int): String {
@@ -392,4 +414,9 @@ fun String.numberOf(char: Char) = count { it == char }
 
 fun String.toByteArrayCommon() = encodeToByteArray()
 
+
+
+
+
+internal val CAPITAL_LETTER = Regex("[A-Z]")
 
