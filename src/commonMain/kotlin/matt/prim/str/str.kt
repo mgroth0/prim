@@ -27,7 +27,7 @@ fun randomAlphanumericString(length: Int, random: Random = Random): String {
     return r
 }
 
-fun String.ensurePrefix(s: String) = removePrefix(s) + s
+fun String.ensurePrefix(s: String) = s + removePrefix(s)
 fun String.ensureSuffix(s: String) = removeSuffix(s) + s
 
 
@@ -413,9 +413,6 @@ fun String.numberOf(char: Char) = count { it == char }
 
 
 fun String.toByteArrayCommon() = encodeToByteArray()
-
-
-
 
 
 internal val CAPITAL_LETTER = Regex("[A-Z]")
