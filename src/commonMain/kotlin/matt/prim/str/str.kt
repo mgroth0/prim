@@ -362,7 +362,7 @@ fun <T> Array<T>.joinWithNewLinesAndTabs(op: ((T) -> CharSequence)? = null) =
 fun <T> Iterable<T>.strings() = map { it.toString() }
 fun <T> Array<T>.strings() = map { it.toString() }.toTypedArray()
 
-fun <T> Iterable<T>.elementsToString() = joinToString(prefix = "[", postfix = "]", separator = ",")
+fun <T> Iterable<T>.elementsToString(delimiter: String = ",") = joinToString(prefix = "[", postfix = "]", separator = delimiter)
 fun <T> Array<T>.elementsToString() = joinToString(prefix = "[", postfix = "]", separator = ",")
 
 
