@@ -417,3 +417,12 @@ fun String.toByteArrayCommon() = encodeToByteArray()
 
 internal val CAPITAL_LETTER = Regex("[A-Z]")
 
+
+fun String.prependZerosUntilLengthIs(num: Int): String {
+    var s = this
+    while (s.length < num) {
+        s = "0$s"
+    }
+    return s
+}
+
