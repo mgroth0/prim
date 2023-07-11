@@ -2,6 +2,10 @@
 
 package matt.prim.str
 
+import matt.lang.require.requireGreaterThanOrEqualTo
+import matt.lang.require.requireIn
+import matt.lang.require.requireNonNegative
+import matt.lang.require.requirePositive
 import matt.prim.str.mybuild.string
 import kotlin.jvm.JvmName
 import kotlin.random.Random
@@ -11,14 +15,23 @@ fun String.containsAny(vararg strings: String): Boolean {
 }
 
 /*like python!*/
-fun <T> String.join(itr: Iterable<T>, op: (T) -> String = { it.toString() }) =
+fun <T> String.join(
+    itr: Iterable<T>,
+    op: (T) -> String = { it.toString() }
+) =
     itr.joinToString(separator = this) { op(it) }
 
-fun maybePlural(count: Int, noun: String): String {
+fun maybePlural(
+    count: Int,
+    noun: String
+): String {
     return if (count == 1) noun else "${noun}s"
 }
 
-fun randomAlphanumericString(length: Int, random: Random = Random): String {
+fun randomAlphanumericString(
+    length: Int,
+    random: Random = Random
+): String {
     val candidates = ALPHABET + ALPHABET.map { it.lowercaseChar() } + (0..9).map { it.toString().toCharArray().first() }
     var r = ""
     repeat(length) {
@@ -37,8 +50,11 @@ fun String.replaceLastChar(new: String): String {
     return replaceAt(indices.last, new)
 }
 
-fun String.replaceAt(index: Int, new: String): String {
-    require(index in indices)
+fun String.replaceAt(
+    index: Int,
+    new: String
+): String {
+    requireIn(index, indices)
     val before = if (index == 0) {
         ""
     } else {
@@ -74,7 +90,10 @@ fun String.incEach(): String {
     }
 }
 
-fun String.insertRandomly(char: Char, rand: Random = Random): String {
+fun String.insertRandomly(
+    char: Char,
+    rand: Random = Random
+): String {
     return StringBuilder(this).insert(rand.nextInt(0, length), char).toString()
 }
 
@@ -141,7 +160,10 @@ infix fun String.lowinbi(s: String): Boolean {
 
 fun String.hasWhitespace() = any { it.isWhitespace() }
 
-fun String.startsWithAny(atLeastOne: String, vararg more: String): Boolean {
+fun String.startsWithAny(
+    atLeastOne: String,
+    vararg more: String
+): Boolean {
     if (startsWith(atLeastOne)) return true
     more.forEach { if (startsWith(it)) return true }
     return false
@@ -173,7 +195,10 @@ fun Int.prependZeros(untilNumDigits: Int): String {
     return s
 }
 
-fun String.addSpacesUntilLengthIs(n: Int, prepend: Boolean = false): String {
+fun String.addSpacesUntilLengthIs(
+    n: Int,
+    prepend: Boolean = false
+): String {
     var s = this
     if (prepend) {
         while (s.length < n) {
@@ -216,7 +241,10 @@ val DOWN_ARROW = "↓"
 val UP_ARROW = "↑"
 
 
-fun String.substringAfterIth(c: Char, num: Number): String {
+fun String.substringAfterIth(
+    c: Char,
+    num: Number
+): String {
     val intNum = num.toInt()
     if (this.count { it == c } < intNum) {
         return this
@@ -276,7 +304,7 @@ fun String.truncateOrCenterInSpaces(exactNumChars: Int): String {
 const val elipses = " ..."
 fun String.truncateWithElipsesOrAddSpaces(exactNumChars: Int): String {
     val numCharsBeforeElipses = exactNumChars - 4
-    require(numCharsBeforeElipses >= 0)
+    requireGreaterThanOrEqualTo(numCharsBeforeElipses, 0)
     if (length <= exactNumChars) return this.addSpacesUntilLengthIs(exactNumChars)
     else return this.substring(0, numCharsBeforeElipses) + elipses
 }
@@ -362,7 +390,9 @@ fun <T> Array<T>.joinWithNewLinesAndTabs(op: ((T) -> CharSequence)? = null) =
 fun <T> Iterable<T>.strings() = map { it.toString() }
 fun <T> Array<T>.strings() = map { it.toString() }.toTypedArray()
 
-fun <T> Iterable<T>.elementsToString(delimiter: String = ",") = joinToString(prefix = "[", postfix = "]", separator = delimiter)
+fun <T> Iterable<T>.elementsToString(delimiter: String = ",") =
+    joinToString(prefix = "[", postfix = "]", separator = delimiter)
+
 fun <T> Array<T>.elementsToString() = joinToString(prefix = "[", postfix = "]", separator = ",")
 
 
@@ -370,7 +400,7 @@ fun <T> Iterable<T>.joinWithBars(op: ((T) -> CharSequence)? = null) = joinToStri
 
 
 operator fun String.times(n: Int): String {
-    require(n >= 0) {
+    requireNonNegative(n) {
         "tried to multiply string by negative number ($n)"
     }
     if (n == 0) return ""

@@ -11,9 +11,6 @@ import java.nio.channels.ReadableByteChannel
 import java.nio.channels.WritableByteChannel
 
 
-fun ByteArray.toShort() = ByteBuffer.wrap(this).short
-fun ByteArray.toInt() = ByteBuffer.wrap(this).int
-fun ByteArray.toLong() = ByteBuffer.wrap(this).long
 fun ByteArray.toFloat() = ByteBuffer.wrap(this).float
 fun ByteArray.toDouble() = ByteBuffer.wrap(this).double
 

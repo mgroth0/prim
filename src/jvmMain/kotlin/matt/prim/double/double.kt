@@ -11,10 +11,13 @@ fun Double.toByteArray() = ByteBuffer.allocate(DOUBLE_BYTE_LEN).putDouble(this).
 fun Double.isNaNInfiniteOrZero() = isNaN() || isInfinite() || this == 0.0
 
 fun Double.isWholeNumber(): Boolean {
-  return ceil(this) == floor(this)
+    return ceil(this) == floor(this)
 }
 
+
 fun Double.requireIsWholeNumber(): Double {
-  require(isWholeNumber())
-  return this
+    require(isWholeNumber()) {
+        "$this should be a whole number"
+    }
+    return this
 }
