@@ -5,7 +5,6 @@ package matt.prim.str
 import matt.lang.require.requireGreaterThanOrEqualTo
 import matt.lang.require.requireIn
 import matt.lang.require.requireNonNegative
-import matt.lang.require.requirePositive
 import matt.prim.str.mybuild.string
 import kotlin.jvm.JvmName
 import kotlin.random.Random

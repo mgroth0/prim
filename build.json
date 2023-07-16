@@ -3,16 +3,7 @@
   "jvm": {},
   "js": {"type":"lib"},
   "dependencies": [
-    {
-      "type": "Lib",
-      "cfg": "commonMainApi",
-      "key": "kt-stdlib"
-    },
-    {
-      "type": "Lib",
-      "cfg": "jsMainApi",
-      "key": "kt-stdlib-js"
-    },
+
     {
       "type": "Project",
       "cfg": "commonMainImplementation",
