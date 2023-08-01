@@ -455,3 +455,5 @@ fun String.prependZerosUntilLengthIs(num: Int): String {
     return s
 }
 
+
+infix fun String.orIfBlank(s: String) = takeUnless { isBlank() } ?: s
