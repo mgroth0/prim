@@ -1,13 +1,20 @@
 {
-  "type": "MultiPlatformModule",
-  "jvm": {},
-  "js": {"type":"lib"},
-  "dependencies": [
-
-    {
-      "type": "Project",
-      "cfg": "commonMainImplementation",
-      "path": ":k:lang"
+    "type": "MultiPlatformModule",
+    "dependencies": [
+        {
+            "type": "Project",
+            "cfg": "commonMainImplementation",
+            "path": ":k:lang"
+        },
+        {
+            "type": "Project",
+            "cfg": "jvmTestImplementation",
+            "path": ":k:test"
+        }
+    ],
+    "jvm": {
+    },
+    "js": {
+        "type": "lib"
     }
-  ]
 }

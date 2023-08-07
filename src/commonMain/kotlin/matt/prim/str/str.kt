@@ -5,6 +5,7 @@ package matt.prim.str
 import matt.lang.require.requireGreaterThanOrEqualTo
 import matt.lang.require.requireIn
 import matt.lang.require.requireNonNegative
+import matt.lang.require.requireOne
 import matt.prim.str.mybuild.string
 import kotlin.jvm.JvmName
 import kotlin.random.Random
@@ -457,3 +458,8 @@ fun String.prependZerosUntilLengthIs(num: Int): String {
 
 
 infix fun String.orIfBlank(s: String) = takeUnless { isBlank() } ?: s
+
+fun String.requireIsOneLine(): String {
+    requireOne(lines().size)
+    return this
+}
