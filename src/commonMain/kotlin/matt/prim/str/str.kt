@@ -277,7 +277,7 @@ val String.hasWhiteSpace
 
 fun String.toIntOrNullIfBlank() = if (isBlank()) null else this.toInt()
 fun String.toDoubleOrNullIfBlank() = if (isBlank()) null else this.toDouble()
-fun String.toBooleanOrNullIfBlank() = if (isBlank()) null else this.toBoolean()
+fun String.toBooleanOrNullIfBlank() = if (isBlank()) null else this.toBooleanStrict()
 
 
 fun String.truncate(maxChars: Int): String {
@@ -380,6 +380,9 @@ fun <T> Array<T>.joinWithForwardSlashes(op: ((T) -> CharSequence)? = null) = joi
 
 fun <T> Iterable<T>.joinWithNewLines(op: ((T) -> CharSequence)? = null) = joinToString("\n", transform = op)
 fun <T> Array<T>.joinWithNewLines(op: ((T) -> CharSequence)? = null) = joinToString("\n", transform = op)
+
+fun <T> Iterable<T>.joinWithTabs(op: ((T) -> CharSequence)? = null) = joinToString("\t", transform = op)
+fun <T> Array<T>.joinWithTabs(op: ((T) -> CharSequence)? = null) = joinToString("\t", transform = op)
 
 fun <T> Iterable<T>.joinWithNewLinesAndTabs(op: ((T) -> CharSequence)? = null) =
     joinToString("\n", transform = { "\t${op?.invoke(it) ?: it.toString()}" })

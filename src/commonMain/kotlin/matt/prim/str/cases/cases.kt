@@ -13,7 +13,10 @@ fun String.isCase(case: StringCase): Boolean {
     return case.isInThisCase(this)
 }
 
-fun String.convert(from: StringCase, to: StringCase): String {
+fun String.convert(
+    from: StringCase,
+    to: StringCase
+): String {
     return to.join(from.split(this))
 }
 
@@ -206,7 +209,9 @@ object TrainCase : DelimiterCase('-') {
 
 }
 
-sealed class FileCase(delimiter: Char) : DelimiterCase(delimiter, allowChars = listOf('-', '_'))
+sealed class FileCase(delimiter: Char) : DelimiterCase(
+    delimiter, allowChars = listOf('-', '_', '.')
+)
 
 object UnixFileCase : FileCase('/')
 object PlatformFileCase : FileCase(
