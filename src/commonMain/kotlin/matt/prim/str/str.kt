@@ -2,6 +2,7 @@
 
 package matt.prim.str
 
+import matt.lang.anno.Duplicated
 import matt.lang.require.requireGreaterThanOrEqualTo
 import matt.lang.require.requireIn
 import matt.lang.require.requireNonNegative
@@ -158,6 +159,7 @@ infix fun String.lowinbi(s: String): Boolean {
     return l1 in l2 || l2 in l1
 }
 
+@Duplicated
 fun String.hasWhitespace() = any { it.isWhitespace() }
 
 fun String.startsWithAny(
