@@ -1,64 +1,129 @@
 package matt.prim.str.mybuild
 
+import matt.lang.function.Dsl
+import matt.prim.str.BLANK_STRING
+import matt.prim.str.NEW_LINE_CHARS
+import matt.prim.str.mybuild.api.LineDelimitedStringDsl
+import matt.prim.str.mybuild.api.RootStringDsl
+import matt.prim.str.mybuild.api.StringColumnsDsl
+import matt.prim.str.mybuild.api.StringDsl
+import matt.prim.str.mybuild.api.string
+import matt.prim.str.times
 
-@DslMarker
-annotation class StringDslMarker
 
-@StringDslMarker
-interface StringDSL {
+internal abstract class StringDslBase<T> : StringDsl<T> {
+    final override fun toString() = string
+}
+
+
+internal abstract class MyStringDsl<T> : StringDslBase<T>() {
+    override var string: String = ""
+        protected set
+
+    protected abstract val delimiter: String
+
+    private var appendedFirst = false
+    protected fun appendString(s: String) {
+        if (appendedFirst) {
+            string += delimiter
+        }
+        string += s
+        appendedFirst = true
+
+
+    }
+
+    final override fun append(a: T) = appendString(a.toString())
+
+    final override operator fun T.unaryPlus() = append(this)
+
+
+    override fun tabDelimited(op: Dsl<StringDsl<T>>) = delimited('\t', op)
+    override fun commaDelimited(op: Dsl<StringDsl<T>>) = delimited(',', op)
+
+    protected fun delimited(
+        tempDelim: Char,
+        op: MyStringDsl<T>.() -> Unit
+    ) = delimited(tempDelim.toString(), op)
+
+    private fun delimited(
+        tempDelim: String,
+        op: MyStringDsl<T>.() -> Unit
+    ) {
+        applySubDsl(DelimitedStringDsl<T>(tempDelim), op)
+    }
+
+    private fun spaceDelimited(op: StringDsl<T>.() -> Unit) = delimited(' ', op)
+    fun words(op: StringDsl<T>.() -> Unit) {
+        spaceDelimited(op)
+    }
+
+    protected fun <D : StringDsl<*>> applySubDsl(
+        subDsl: D,
+        buildOp: Dsl<D>
+    ) {
+        subDsl.apply(buildOp)
+        appendString(subDsl.string)
+    }
+}
+
+internal class DelimitedStringDsl<T>(override val delimiter: String) : MyStringDsl<T>() {
+    constructor(delimiter: Char) : this(delimiter.toString())
+}
+
+
+internal class RootStringDslImpl<T> : MyStringDsl<T>(), RootStringDsl<T> {
+
+    override val delimiter = BLANK_STRING
+
+    override fun newLine() {
+        appendString("\n")
+    }
+
+    override fun lineDelimited(op: Dsl<LineDelimitedStringDsl<T>>) = applySubDsl(LineDelimitedStringDslImpl<T>(), op)
+
+    override fun columned(op: Dsl<StringColumnsDsl>) = applySubDsl(StringColumnsDslImpl(), op)
+
 
 }
 
-fun string(op: MyStringDSL.() -> Unit): String = MyStringDSL().apply(op).string
-fun lineDelimitedString(op: MyStringDSL.() -> Unit): String = MyStringDSL().apply {
-    lineDelimited(op)
-}.string
 
-class MyStringDSL : StringDSL {
-    var string: String = ""
+private open class LineDelimitedStringDslImpl<T> : MyStringDsl<T>(), LineDelimitedStringDsl<T> {
+
+    final override var delimiter = "\n"
         private set
 
-    private var delimiter = ""
-
-    fun append(a: Any?) {
-        if (string.isNotEmpty() && delimiter.isNotEmpty()) {
-            string += delimiter
+    override var indent = 0
+        set(value) {
+            delimiter = "\n" + ('\t' * value)
+            field = value
         }
-        string += a.toString()
+
+    override fun blankLine() {
+        appendString("")
     }
 
-    operator fun Any?.unaryPlus() {
-        append(this)
+    override fun singleLine(op: Dsl<StringDsl<Any?>>) {
+        val s = string(op).trim { it in NEW_LINE_CHARS }
+        require(s.lines().size == 1) {
+            "you promised it would be a single line, but I got ${s.count { it in NEW_LINE_CHARS }} new line characters!:\n${s}"
+        }
+        appendString(s)
     }
 
+}
 
-    fun blankLine() {
-        +"\n"
+
+private class StringColumnsDslImpl : LineDelimitedStringDslImpl<Nothing>(), StringColumnsDsl {
+    override fun row(vararg elements: Any?) {
+        singleLine {
+            tabDelimited {
+                elements.forEach {
+                    append(it)
+                }
+            }
+        }
     }
-
-    fun words(op: MyStringDSL.() -> Unit) = spaceDelimited(op)
-
-
-    fun delimited(tempDelim: Char, op: MyStringDSL.() -> Unit) = delimited(tempDelim.toString(), op)
-    fun delimited(tempDelim: String, op: MyStringDSL.() -> Unit) {
-        val subDSL = MyStringDSL()
-        subDSL.delimiter = tempDelim
-        subDSL.apply(op)
-        +subDSL.string
-    }
-
-    fun spaceDelimited(op: MyStringDSL.() -> Unit) = delimited(' ', op)
-    fun lineDelimited(op: MyStringDSL.() -> Unit) = delimited('\n', op)
-    fun tabDelimited(op: MyStringDSL.() -> Unit) = delimited('\t', op)
-    fun commaDelimited(op: MyStringDSL.() -> Unit) = delimited(',', op)
-
-
-    fun parenthesis(op: MyStringDSL.() -> Unit) {
-        val subDSL = MyStringDSL()
-        subDSL.apply(op)
-        +"(${subDSL.string})"
-    }
-
 }
 
 

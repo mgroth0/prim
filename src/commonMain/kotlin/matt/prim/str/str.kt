@@ -7,9 +7,12 @@ import matt.lang.require.requireGreaterThanOrEqualTo
 import matt.lang.require.requireIn
 import matt.lang.require.requireNonNegative
 import matt.lang.require.requireOne
-import matt.prim.str.mybuild.string
+import matt.prim.str.mybuild.api.string
 import kotlin.jvm.JvmName
 import kotlin.random.Random
+
+/*a bit safer*/
+const val BLANK_STRING = ""
 
 fun String.containsAny(vararg strings: String): Boolean {
     return strings.any { contains(it) }

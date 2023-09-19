@@ -3,7 +3,7 @@
     "dependencies": [
         {
             "type": "Project",
-            "cfg": "commonMainImplementation",
+            "cfg": "commonMainApi",
             "path": ":k:lang"
         },
         {
