@@ -80,7 +80,7 @@ internal class RootStringDslImpl<T> : MyStringDsl<T>(), RootStringDsl<T> {
         appendString("\n")
     }
 
-    override fun lineDelimited(op: Dsl<LineDelimitedStringDsl<T>>) = applySubDsl(LineDelimitedStringDslImpl<T>(), op)
+    override fun lineDelimited(op: Dsl<LineDelimitedStringDsl<T>>) = applySubDsl(LineDelimitedStringDslImpl(), op)
 
     override fun columned(op: Dsl<StringColumnsDsl>) = applySubDsl(StringColumnsDslImpl(), op)
 

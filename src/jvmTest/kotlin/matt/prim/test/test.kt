@@ -5,7 +5,7 @@ import matt.prim.base64.decodeFromBase64
 import matt.prim.base64.encodeToBase64
 import matt.prim.byte.hex.toHex
 import matt.prim.ushort.toByteArray
-import matt.test.JupiterTestAssertions.assertRunsInOneMinute
+import matt.test.assertions.JupiterTestAssertions.assertRunsInOneMinute
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals

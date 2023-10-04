@@ -22,8 +22,7 @@ fun String.containsAny(vararg strings: String): Boolean {
 fun <T> String.join(
     itr: Iterable<T>,
     op: (T) -> String = { it.toString() }
-) =
-    itr.joinToString(separator = this) { op(it) }
+) = itr.joinToString(separator = this) { op(it) }
 
 fun maybePlural(
     count: Int,
@@ -323,8 +322,32 @@ fun String.truncateWithElipsesOrAddSpacesAsNeeded(allowableLengths: IntRange): S
 
 
 val ALPHABET = arrayOf(
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
-    'X', 'Y', 'Z'
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z'
 )
 
 val VOWELS = arrayOf('A', 'E', 'I', 'O', 'U', 'Y')
@@ -408,25 +431,28 @@ fun <T> Iterable<T>.joinWithBars(op: ((T) -> CharSequence)? = null) = joinToStri
 
 
 operator fun String.times(n: Int): String {
-    requireNonNegative(n) {
-        "tried to multiply string by negative number ($n)"
+    return when (length) {
+        0    -> ""
+        1    -> first() * n
+        else -> {
+            requireNonNegative(n) {
+                "tried to multiply string by negative number ($n)"
+            }
+            if (n == 0) return ""
+            var r = ""
+            repeat(n) {
+                r += this
+            }
+            r
+        }
     }
-    if (n == 0) return ""
-    var r = ""
-    repeat(n) {
-        r += this
-    }
-    return r
+
 }
 
 operator fun Char.times(n: Int): String {
     require(n >= 0)
     if (n == 0) return ""
-    var r = ""
-    repeat(n) {
-        r += this
-    }
-    return r
+    return CharArray(n) { this }.concatToString()
 }
 
 fun String.isLong() = toLongOrNull() != null
@@ -437,14 +463,11 @@ fun String.isFloat() = toFloatOrNull() != null
 
 /*kinda how JetBrains wants us to do it*/
 fun String.cap() =
-    replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
-/*if I go back to 1.4: this.capitalize()*/
+    replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }/*if I go back to 1.4: this.capitalize()*/
 
 
 /*kinda how JetBrains wants us to do it*/
-fun String.decap() =
-    replaceFirstChar { it.lowercase() }
-/*if I go back to 1.4: this.decapitalize()*/
+fun String.decap() = replaceFirstChar { it.lowercase() }/*if I go back to 1.4: this.decapitalize()*/
 
 
 fun String.numberOf(char: Char) = count { it == char }
