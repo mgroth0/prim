@@ -1,12 +1,13 @@
 package matt.prim.double
 
 import java.nio.ByteBuffer
+import java.nio.ByteOrder
 import kotlin.math.ceil
 import kotlin.math.floor
 
 const val DOUBLE_BYTE_LEN = 8
 
-fun Double.toByteArray() = ByteBuffer.allocate(DOUBLE_BYTE_LEN).putDouble(this).array()
+fun Double.toByteArray(order: ByteOrder) = ByteBuffer.allocate(DOUBLE_BYTE_LEN).order(order).putDouble(this).array()
 
 fun Double.isNaNInfiniteOrZero() = isNaN() || isInfinite() || this == 0.0
 

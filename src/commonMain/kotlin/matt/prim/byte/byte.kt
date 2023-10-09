@@ -1,6 +1,8 @@
 package matt.prim.byte
 
 import matt.prim.byte.hex.toHex
+import matt.prim.endian.MyByteOrder
+import matt.prim.endian.MyByteOrder.BIG
 import kotlin.jvm.JvmInline
 
 fun ByteArray.reasonablePrintableString(): String {
@@ -31,8 +33,8 @@ value class Bits(val byte: Byte) : Iterable<Bit> {
     override fun iterator(): Iterator<Bit> {
         return (0..7).map { getBit(byte.toInt(), it) }.map {
             when (it) {
-                0    -> Down
-                1    -> Up
+                0 -> Down
+                1 -> Up
                 else -> error("got weird bit: $it")
             }
         }.iterator()
@@ -49,31 +51,42 @@ value class Bits(val byte: Byte) : Iterable<Bit> {
 
 }
 
-fun ByteArray.toShort(): Short {
+fun ByteArray.toShort(order: MyByteOrder): Short {
+    if (order != BIG) TODO()
     return ((this[0].toInt() shl 8) or
             (this[1].toInt() and 0xff)).toShort()
 }
 
-fun ByteArray.toShort(offset: Int): Short {
+fun ByteArray.toShort(
+    offset: Int,
+    order: MyByteOrder
+): Short {
+    if (order != BIG) TODO()
     return ((this[offset + 0].toInt() shl 8) or
             (this[offset + 1].toInt() and 0xff)).toShort()
 }
 
-fun ByteArray.toInt(): Int {
+fun ByteArray.toInt(order: MyByteOrder): Int {
+    if (order != BIG) TODO()
     return (this[0].toInt() shl 24) or
             (this[1].toInt() and 0xff shl 16) or
             (this[2].toInt() and 0xff shl 8) or
             (this[3].toInt() and 0xff)
 }
 
-fun ByteArray.toInt(offset: Int): Int {
+fun ByteArray.toInt(
+    offset: Int,
+    order: MyByteOrder
+): Int {
+    if (order != BIG) TODO()
     return (this[offset + 0].toInt() shl 24) or
             (this[offset + 1].toInt() and 0xff shl 16) or
             (this[offset + 2].toInt() and 0xff shl 8) or
             (this[offset + 3].toInt() and 0xff)
 }
 
-fun ByteArray.toLong(): Long {
+fun ByteArray.toLong(order: MyByteOrder): Long {
+    if (order != BIG) TODO()
     return ((this[0].toInt() shl 56) or
             (this[1].toInt() and 0xff shl 48) or
             (this[2].toInt() and 0xff shl 40) or
@@ -84,7 +97,11 @@ fun ByteArray.toLong(): Long {
             (this[7].toInt() and 0xff)).toLong()
 }
 
-fun ByteArray.toLong(offset: Int): Long {
+fun ByteArray.toLong(
+    offset: Int,
+    order: MyByteOrder
+): Long {
+    if (order != BIG) TODO()
     return ((this[offset + 0].toInt() shl 56) or
             (this[offset + 1].toInt() and 0xff shl 48) or
             (this[offset + 2].toInt() and 0xff shl 40) or

@@ -6,6 +6,7 @@ import matt.prim.base64.encodeToBase64
 import matt.prim.byte.hex.toHex
 import matt.prim.ushort.toByteArray
 import matt.test.assertions.JupiterTestAssertions.assertRunsInOneMinute
+import java.nio.ByteOrder
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
@@ -23,7 +24,7 @@ class PrimTests {
     fun uShortToByteArray() = assertRunsInOneMinute {
         assertContentEquals(
             byteArrayOf(0, 1),
-            1.toUShort().toByteArray(),
+            1.toUShort().toByteArray(ByteOrder.BIG_ENDIAN),
         )
     }
 

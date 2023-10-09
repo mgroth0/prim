@@ -6,13 +6,14 @@ package matt.prim.byte
 import java.io.InputStream
 import java.io.OutputStream
 import java.nio.ByteBuffer
+import java.nio.ByteOrder
 import java.nio.channels.Channels
 import java.nio.channels.ReadableByteChannel
 import java.nio.channels.WritableByteChannel
 
 
-fun ByteArray.toFloat() = ByteBuffer.wrap(this).float
-fun ByteArray.toDouble() = ByteBuffer.wrap(this).double
+fun ByteArray.toFloat(order: ByteOrder) = ByteBuffer.wrap(this).order(order).float
+fun ByteArray.toDouble(order: ByteOrder) = ByteBuffer.wrap(this).order(order).double
 
 
 fun InputStream.efficientlyTransferTo(out: OutputStream) = Channels.newChannel(this).efficientlyTransferTo(out)
