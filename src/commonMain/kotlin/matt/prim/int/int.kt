@@ -3,6 +3,8 @@ package matt.prim.int
 import matt.prim.endian.MyByteOrder
 import matt.prim.endian.MyByteOrder.BIG
 import matt.prim.endian.MyByteOrder.LITTLE
+import kotlin.math.ceil
+import kotlin.math.floor
 
 class UInt8
 
@@ -30,3 +32,9 @@ fun Int.toByteArray(
     return buffer
 
 }
+
+
+fun Double.ceilInt() = ceil(this).toInt()
+fun Double.floorInt() = floor(this).toInt()
+fun Float.ceilInt() = ceil(this).toInt()
+fun Float.floorInt() = floor(this).toInt()

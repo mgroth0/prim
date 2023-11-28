@@ -9,4 +9,4 @@ fun Float.toByteArray(
     order: ByteOrder
 ) = ByteBuffer.allocate(FLOAT_BYTE_LEN).order(order).putFloat(this).array()
 
-fun Float.isNaNInfiniteOrZero() = isNaN() || isInfinite() || this == 0f
+

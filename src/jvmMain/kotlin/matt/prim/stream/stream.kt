@@ -1,6 +1,6 @@
 package matt.prim.stream
 
-import matt.lang.safeconvert.requireIsByte
+import matt.lang.safeconvert.verifyToByte
 import matt.prim.byte.toDouble
 import matt.prim.byte.toInt
 import matt.prim.byte.toLong
@@ -22,7 +22,7 @@ fun InputStream.readBool() = when (val b = read()) {
 fun InputStream.readShort(order: ByteOrder) = readNBytes(2).toShort(order.myByteOrder)
 fun InputStream.readInt(order: ByteOrder) = readNBytes(4).toInt(order.myByteOrder)
 fun InputStream.readLong(order: ByteOrder) = readNBytes(8).toLong(order.myByteOrder)
-fun InputStream.readByte() = read().requireIsByte()
+fun InputStream.readByte() = read().verifyToByte()
 fun InputStream.readDouble(order: ByteOrder) = readNBytes(8).toDouble(order)
 
 

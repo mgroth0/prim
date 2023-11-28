@@ -1,7 +1,7 @@
 package matt.prim.str.mybuild
 
 import matt.lang.function.Dsl
-import matt.prim.str.BLANK_STRING
+import matt.prim.str.EMPTY_STRING
 import matt.prim.str.NEW_LINE_CHARS
 import matt.prim.str.mybuild.api.LineDelimitedStringDsl
 import matt.prim.str.mybuild.api.RootStringDsl
@@ -74,7 +74,7 @@ internal class DelimitedStringDsl<T>(override val delimiter: String) : MyStringD
 
 internal class RootStringDslImpl<T> : MyStringDsl<T>(), RootStringDsl<T> {
 
-    override val delimiter = BLANK_STRING
+    override val delimiter = EMPTY_STRING
 
     override fun newLine() {
         appendString("\n")

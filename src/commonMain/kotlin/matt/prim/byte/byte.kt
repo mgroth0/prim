@@ -33,8 +33,8 @@ value class Bits(val byte: Byte) : Iterable<Bit> {
     override fun iterator(): Iterator<Bit> {
         return (0..7).map { getBit(byte.toInt(), it) }.map {
             when (it) {
-                0 -> Down
-                1 -> Up
+                0    -> Down
+                1    -> Up
                 else -> error("got weird bit: $it")
             }
         }.iterator()
@@ -87,14 +87,14 @@ fun ByteArray.toInt(
 
 fun ByteArray.toLong(order: MyByteOrder): Long {
     if (order != BIG) TODO()
-    return ((this[0].toInt() shl 56) or
-            (this[1].toInt() and 0xff shl 48) or
-            (this[2].toInt() and 0xff shl 40) or
-            (this[3].toInt() and 0xff shl 32) or
-            (this[4].toInt() and 0xff shl 24) or
-            (this[5].toInt() and 0xff shl 16) or
-            (this[6].toInt() and 0xff shl 8) or
-            (this[7].toInt() and 0xff)).toLong()
+    return ((this[0].toLong() shl 56) or
+            (this[1].toLong() and 0xff shl 48) or
+            (this[2].toLong() and 0xff shl 40) or
+            (this[3].toLong() and 0xff shl 32) or
+            (this[4].toLong() and 0xff shl 24) or
+            (this[5].toLong() and 0xff shl 16) or
+            (this[6].toLong() and 0xff shl 8) or
+            (this[7].toLong() and 0xff))
 }
 
 fun ByteArray.toLong(
@@ -102,12 +102,12 @@ fun ByteArray.toLong(
     order: MyByteOrder
 ): Long {
     if (order != BIG) TODO()
-    return ((this[offset + 0].toInt() shl 56) or
-            (this[offset + 1].toInt() and 0xff shl 48) or
-            (this[offset + 2].toInt() and 0xff shl 40) or
-            (this[offset + 3].toInt() and 0xff shl 32) or
-            (this[offset + 4].toInt() and 0xff shl 24) or
-            (this[offset + 5].toInt() and 0xff shl 16) or
-            (this[offset + 6].toInt() and 0xff shl 8) or
-            (this[offset + 7].toInt() and 0xff)).toLong()
+    return ((this[offset + 0].toLong() shl 56) or
+            (this[offset + 1].toLong() and 0xff shl 48) or
+            (this[offset + 2].toLong() and 0xff shl 40) or
+            (this[offset + 3].toLong() and 0xff shl 32) or
+            (this[offset + 4].toLong() and 0xff shl 24) or
+            (this[offset + 5].toLong() and 0xff shl 16) or
+            (this[offset + 6].toLong() and 0xff shl 8) or
+            (this[offset + 7].toLong() and 0xff))
 }

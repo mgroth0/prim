@@ -18,6 +18,30 @@ class PrimTests {
             "01",
             0x00000001.toByte().toHex()
         )
+
+        assertEquals(
+            "01",
+            0x01.toByte().toHex()
+        )
+        assertEquals(
+            "10",
+            0x10.toByte().toHex()
+        )
+
+
+
+        assertEquals(
+            "10",
+            0x10u.toUByte().toHex()
+        )
+        assertEquals(
+            "FF",
+            UByte.MAX_VALUE.toHex()
+        )
+        assertEquals(
+            "FF",
+            0xFFu.toUByte().toHex()
+        )
     }
 
     @Test

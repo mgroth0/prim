@@ -3,16 +3,17 @@
 package matt.prim.str
 
 import matt.lang.anno.Duplicated
-import matt.lang.require.requireGreaterThanOrEqualTo
-import matt.lang.require.requireIn
-import matt.lang.require.requireNonNegative
-import matt.lang.require.requireOne
+import matt.lang.assertions.require.requireGreaterThanOrEqualTo
+import matt.lang.assertions.require.requireIn
+import matt.lang.assertions.require.requireNonNegative
+import matt.lang.assertions.require.requireOne
+import matt.prim.char.ALPHANUMERIC_ALL
 import matt.prim.str.mybuild.api.string
 import kotlin.jvm.JvmName
 import kotlin.random.Random
 
 /*a bit safer*/
-const val BLANK_STRING = ""
+const val EMPTY_STRING = ""
 
 fun String.containsAny(vararg strings: String): Boolean {
     return strings.any { contains(it) }
@@ -31,17 +32,11 @@ fun maybePlural(
     return if (count == 1) noun else "${noun}s"
 }
 
-fun randomAlphanumericString(
+fun Random.nextAlphanumericString(
     length: Int,
-    random: Random = Random
-): String {
-    val candidates = ALPHABET + ALPHABET.map { it.lowercaseChar() } + (0..9).map { it.toString().toCharArray().first() }
-    var r = ""
-    repeat(length) {
-        r += candidates.random(random)
-    }
-    return r
-}
+) = CharArray(length) {
+    ALPHANUMERIC_ALL.random(this)
+}.concatToString()
 
 fun String.ensurePrefix(s: String) = s + removePrefix(s)
 fun String.ensureSuffix(s: String) = removeSuffix(s) + s
@@ -321,39 +316,6 @@ fun String.truncateWithElipsesOrAddSpacesAsNeeded(allowableLengths: IntRange): S
 }
 
 
-val ALPHABET = arrayOf(
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'V',
-    'W',
-    'X',
-    'Y',
-    'Z'
-)
-
-val VOWELS = arrayOf('A', 'E', 'I', 'O', 'U', 'Y')
-val CONSENENTS = ALPHABET.filter { it !in VOWELS }.toTypedArray()
-
-
 operator fun String.get(intRange: IntRange) = subSequence(intRange.first, intRange.last + 1)
 fun String.throttled() = "THROTTLED STRING OF LENGTH $length (\"${this[0..100]}\"...)"
 
@@ -494,3 +456,5 @@ fun String.requireIsOneLine(): String {
     requireOne(lines().size)
     return this
 }
+
+fun String.countLineBreaks() = lineSequence().count() - 1
