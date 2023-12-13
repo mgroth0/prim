@@ -458,3 +458,5 @@ fun String.requireIsOneLine(): String {
 }
 
 fun String.countLineBreaks() = lineSequence().count() - 1
+fun String.countLines() = lineSequence().count()
+
