@@ -3,11 +3,13 @@
 package matt.prim.base64
 
 import matt.lang.NEVER
+import matt.lang.anno.Related
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 import kotlin.math.ceil
 
 
+@Related(34872983)
 fun ByteArray.encodeToBase64() = Base64.encode(this)
 
 fun ByteArray.decodeFromBase64() = Base64.decode(this)

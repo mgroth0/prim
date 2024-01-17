@@ -2,12 +2,12 @@
 
 package matt.prim.base64
 
-import java.util.*
+import matt.lang.anno.Related
+import java.util.Base64
 import java.util.Base64.Decoder
 import java.util.Base64.Encoder
 
-/*RELATED TO matt.prim.byte.hex. TODO: They structured together*/
-
+@Related(34872983)
 private val BASE_64_ENCODER: Encoder = Base64.getEncoder()
 private val BASE_64_DECODER: Decoder = Base64.getDecoder()
 
@@ -17,7 +17,6 @@ private val BASE_64_URL_ENCODER: Encoder = Base64.getUrlEncoder()
 private val BASE_64_URL_DECODER: Decoder = Base64.getUrlDecoder()
 
 private val BASE_64_URL_ENCODER_NO_PADDING: Encoder = Base64.getUrlEncoder().withoutPadding()
-
 
 
 /*need to request these be added to kotlin*/

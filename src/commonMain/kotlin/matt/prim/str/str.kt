@@ -7,6 +7,7 @@ import matt.lang.assertions.require.requireGreaterThanOrEqualTo
 import matt.lang.assertions.require.requireIn
 import matt.lang.assertions.require.requireNonNegative
 import matt.lang.assertions.require.requireOne
+import matt.lang.ktversion.isKotlin1_4OrEarlier
 import matt.prim.char.ALPHANUMERIC_ALL
 import matt.prim.str.mybuild.api.string
 import kotlin.jvm.JvmName
@@ -25,12 +26,6 @@ fun <T> String.join(
     op: (T) -> String = { it.toString() }
 ) = itr.joinToString(separator = this) { op(it) }
 
-fun maybePlural(
-    count: Int,
-    noun: String
-): String {
-    return if (count == 1) noun else "${noun}s"
-}
 
 fun Random.nextAlphanumericString(
     length: Int,
@@ -113,8 +108,6 @@ fun String.lineIndexOfIndex(i: Int): Int {
 
 fun String.lineNumOfIndex(i: Int) = lineIndexOfIndex(i) + 1
 
-
-val isKotlin1_4OrEarlier by lazy { KotlinVersion.CURRENT.major <= 1 && KotlinVersion.CURRENT.minor <= 4 }
 
 object CharCheck {
     init {
@@ -460,3 +453,11 @@ fun String.requireIsOneLine(): String {
 fun String.countLineBreaks() = lineSequence().count() - 1
 fun String.countLines() = lineSequence().count()
 
+
+fun String.indent() = prependIndent("\t")
+
+fun joinWithNewLines(vararg lines: String) = lines.joinWithNewLines()
+fun joinWithNewLines(lines: List<String>) = lines.joinWithNewLines()
+
+fun joinWithNewLinesAndIndent(vararg lines: String) = lines.joinWithNewLines().indent()
+fun joinWithNewLinesAndIndent(lines: List<String>) = lines.joinWithNewLines().indent()

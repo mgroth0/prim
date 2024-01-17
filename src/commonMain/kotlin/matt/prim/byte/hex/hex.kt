@@ -1,9 +1,10 @@
 package matt.prim.byte.hex
 
+import matt.lang.anno.Related
+
 private val hexArray = "0123456789ABCDEF".toCharArray()
 
-/*RELATED TO matt.prim.base64. TODO: They structured together*/
-
+@Related(34872983)
 fun ByteArray.toHex() = joinToString("") { it.toHex() }
 fun UByteArray.toHex() = joinToString("") { it.toHex() }
 
