@@ -1,5 +1,6 @@
 package matt.prim.converters
 
+import matt.lang.anno.Open
 import matt.lang.convert.BiConverter
 import matt.prim.str.elementsToString
 import matt.prim.str.takeIfNotBlank
@@ -21,9 +22,13 @@ interface StringListConverter<T> : BiConverter<StringList, T> {
 
     fun toStringList(t: T): StringList
     fun fromStringList(s: StringList): T
-    override fun convertToA(b: T): StringList = toStringList(b)
-    override fun convertToB(a: StringList) = fromStringList(a)
 
+    @Open
+    override fun convertToA(b: T): StringList = toStringList(b)
+
+    @Open
+    override fun convertToB(a: StringList) = fromStringList(a)
+    @Open
     fun emptyIsNull(): StringListConverter<T?> = object : StringListConverter<T?> {
         override fun toStringList(t: T?): StringList {
             return if (t == null) emptyList() else this@StringListConverter.toStringList(t)
@@ -39,11 +44,17 @@ interface StringListConverter<T> : BiConverter<StringList, T> {
 interface StringConverter<T> : BiConverter<String, T> {
     fun toString(t: T): String
     fun fromString(s: String): T
+
+    @Open
     override fun convertToA(b: T): String = toString(b)
+
+    @Open
     override fun convertToB(a: String) = fromString(a)
 
+    @Open
     fun asSingularStringListConverter() = StringListConverter.fromStringConverterAsSingular(this)
 
+    @Open
     fun nullAsBlank() = object : BiConverter<String, T?> {
         override fun convertToB(a: String): T? {
             return a.takeIfNotBlank()?.toB()
@@ -68,9 +79,7 @@ object ByteArrayStringConverter : StringConverter<ByteArray> {
 }
 
 
-
 typealias StringList = List<String>
-
 
 
 class StringListByElementConverter<T>(private val elementConverter: StringConverter<T>) : StringListConverter<List<T>> {

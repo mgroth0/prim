@@ -17,7 +17,7 @@ internal abstract class StringDslBase<T> : StringDsl<T> {
 
 
 internal abstract class MyStringDsl<T> : StringDslBase<T>() {
-    override var string: String = ""
+    final override var string: String = ""
         protected set
 
     protected abstract val delimiter: String
@@ -38,8 +38,8 @@ internal abstract class MyStringDsl<T> : StringDslBase<T>() {
     final override operator fun T.unaryPlus() = append(this)
 
 
-    override fun tabDelimited(op: Dsl<StringDsl<T>>) = delimited('\t', op)
-    override fun commaDelimited(op: Dsl<StringDsl<T>>) = delimited(',', op)
+    final override fun tabDelimited(op: Dsl<StringDsl<T>>) = delimited('\t', op)
+    final override fun commaDelimited(op: Dsl<StringDsl<T>>) = delimited(',', op)
 
     protected fun delimited(
         tempDelim: Char,
@@ -93,17 +93,17 @@ private open class LineDelimitedStringDslImpl<T> : MyStringDsl<T>(), LineDelimit
     final override var delimiter = "\n"
         private set
 
-    override var indent = 0
+    final override var indent = 0
         set(value) {
             delimiter = "\n" + ('\t' * value)
             field = value
         }
 
-    override fun blankLine() {
+    final override fun blankLine() {
         appendString("")
     }
 
-    override fun singleLine(op: Dsl<StringDsl<Any?>>) {
+    final override fun singleLine(op: Dsl<StringDsl<Any?>>) {
         val s = string(op).trim { it in NEW_LINE_CHARS }
         require(s.lines().size == 1) {
             "you promised it would be a single line, but I got ${s.count { it in NEW_LINE_CHARS }} new line characters!:\n${s}"

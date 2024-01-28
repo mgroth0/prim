@@ -61,7 +61,7 @@ Output="$r"
 
     protected abstract fun joinImpl(strings: List<String>): String
 
-    override fun toString(): String {
+    final override fun toString(): String {
         return this::class.simpleName!!
     }
 }
@@ -69,7 +69,7 @@ Output="$r"
 abstract class CamelCase(private val capFirst: Boolean) : EnforcingStringCase() {
     @SeeURL("https://www.approxion.com/capital-offenses-how-to-handle-abbreviations-in-camelcase/")
     @SeeURL("https://stackoverflow.com/questions/15526107/acronyms-in-camelcase")
-    override fun isInThisCase(s: String): Boolean {
+    final override fun isInThisCase(s: String): Boolean {
         if (s.isEmpty()) return false
         if (s.hasWhiteSpace) return false
         if (s.any { !it.isLetterOrDigit() }) return false
@@ -90,7 +90,7 @@ abstract class CamelCase(private val capFirst: Boolean) : EnforcingStringCase() 
         return true
     }
 
-    override fun splitImpl(s: String): List<String> {
+    final override fun splitImpl(s: String): List<String> {
         if (s.isBlank()) {
             error("how would I split camel case of a blank string?")
         } else if (s.hasWhiteSpace) {
@@ -119,7 +119,7 @@ abstract class CamelCase(private val capFirst: Boolean) : EnforcingStringCase() 
         return r
     }
 
-    override fun joinImpl(strings: List<String>): String {
+    final override fun joinImpl(strings: List<String>): String {
         var r = ""
         strings.forEachIndexed { index, s ->
             r += if (!capFirst && index == 0) s.decap()

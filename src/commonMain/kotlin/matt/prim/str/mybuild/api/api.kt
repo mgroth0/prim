@@ -27,6 +27,9 @@ interface StringDsl<T> {
 
 
 
+
+
+
 interface RootStringDsl<T> : StringDsl<T> {
     fun newLine()
     fun lineDelimited(op: Dsl<LineDelimitedStringDsl<T>>)
@@ -39,6 +42,8 @@ interface LineDelimitedStringDsl<T> : StringDsl<T> {
     fun blankLine()
     fun singleLine(op: Dsl<StringDsl<Any?>>)
 }
+
+
 
 
 

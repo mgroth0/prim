@@ -34,7 +34,7 @@ fun Random.nextAlphanumericString(
 }.concatToString()
 
 fun String.ensurePrefix(s: String) = s + removePrefix(s)
-fun String.ensureSuffix(s: String) = removeSuffix(s) + s
+
 
 
 fun String.removePrefixAndOrSuffix(s: String) = removePrefix(s).removeSuffix(s)
@@ -171,7 +171,7 @@ abstract class DelimiterAppender(s: String = "") {
     }
 
     operator fun plusAssign(a: Any?) = append(a)
-    override fun toString() = sb.toString()
+    final override fun toString() = sb.toString()
 }
 
 class LineAppender(s: String = "") : DelimiterAppender(s) {
