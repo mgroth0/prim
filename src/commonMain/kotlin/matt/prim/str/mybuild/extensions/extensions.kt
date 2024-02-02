@@ -7,17 +7,15 @@ import matt.prim.str.mybuild.api.RootStringDsl
 import matt.prim.str.mybuild.api.StringColumnsDsl
 import matt.prim.str.mybuild.api.StringDsl
 
-
 fun StringDsl<Any?>.parenthesis(op: RootStringDsl<Any?>.() -> Unit) {
     val subDSL = RootStringDslImpl<Any?>()
     subDSL.apply(op)
     +"(${subDSL.string})"
 }
 
-
 fun StringColumnsDsl.expandableRow(
     shortValue: Any?,
-    possiblyLongValue: Any?
+    possiblyLongValue: Any?,
 ) {
     val secondsString = possiblyLongValue.toString()
     if (secondsString.lines().size > 1) {

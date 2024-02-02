@@ -9,16 +9,12 @@ import matt.prim.str.decap
 import matt.prim.str.hasWhiteSpace
 import matt.prim.str.lower
 
-fun String.isCase(case: StringCase): Boolean {
-    return case.isInThisCase(this)
-}
+fun String.isCase(case: StringCase): Boolean = case.isInThisCase(this)
 
 fun String.convert(
     from: StringCase,
     to: StringCase
-): String {
-    return to.join(from.split(this))
-}
+): String = to.join(from.split(this))
 
 fun List<String>.join(case: StringCase) = case.join(this)
 fun String.split(case: StringCase) = case.split(this)
@@ -61,9 +57,7 @@ Output="$r"
 
     protected abstract fun joinImpl(strings: List<String>): String
 
-    final override fun toString(): String {
-        return this::class.simpleName!!
-    }
+    final override fun toString(): String = this::class.simpleName!!
 }
 
 abstract class CamelCase(private val capFirst: Boolean) : EnforcingStringCase() {
@@ -81,7 +75,7 @@ abstract class CamelCase(private val capFirst: Boolean) : EnforcingStringCase() 
                 println(
                     """
                 WARNING: If I allow upper case letters to touch, then camelCase can no longer be converted correctly between it and snake case without errors, because there is ambiguity when converting from snake case to camel case. See links above where people tend to agree that this touching uppers cannot be allowed.
-            """.trimIndent()
+                    """.trimIndent()
                 )
                 return false
             }
@@ -163,24 +157,18 @@ abstract class DelimiterCase(
 
     protected open fun passesAdditionalChecks(s: String): Boolean = true
 
-    final override fun joinImpl(strings: List<String>): String {
-        return strings.joinToString(separator = delimiterString) {
-            preparePart(it)
-        }
+    final override fun joinImpl(strings: List<String>): String = strings.joinToString(separator = delimiterString) {
+        preparePart(it)
     }
 
     protected open fun preparePart(s: String): String = s
 
-    final override fun splitImpl(s: String): List<String> {
-        return s.split(delimiter)
-    }
+    final override fun splitImpl(s: String): List<String> = s.split(delimiter)
 }
 
 
 object SnakeCase : DelimiterCase(delimiter = '_') {
-    override fun passesAdditionalChecks(s: String): Boolean {
-        return s.none { it.isUpperCase() }
-    }
+    override fun passesAdditionalChecks(s: String): Boolean = s.none { it.isUpperCase() }
 
     override fun preparePart(s: String) = s.lower()
 }
@@ -188,24 +176,16 @@ object SnakeCase : DelimiterCase(delimiter = '_') {
 object KebabCase : DelimiterCase('-')
 
 object LowerKebabCase : DelimiterCase('-') {
-    override fun passesAdditionalChecks(s: String): Boolean {
-        return s.split(delimiter).all { it.all { it.isLowerCase() } }
-    }
+    override fun passesAdditionalChecks(s: String): Boolean = s.split(delimiter).all { it.all { it.isLowerCase() } }
 
-    override fun preparePart(s: String): String {
-        return s.lower()
-    }
+    override fun preparePart(s: String): String = s.lower()
 }
 
 object TrainCase : DelimiterCase('-') {
 
-    override fun passesAdditionalChecks(s: String): Boolean {
-        return s.split(delimiter).all { it.first().isUpperCase() }
-    }
+    override fun passesAdditionalChecks(s: String): Boolean = s.split(delimiter).all { it.first().isUpperCase() }
 
-    override fun preparePart(s: String): String {
-        return s.cap()
-    }
+    override fun preparePart(s: String): String = s.cap()
 
 }
 
@@ -224,12 +204,7 @@ object PlatformFileCase : FileCase(
 @SeeURL("https://www.wikiwand.com/en/Title_case")
 object TitleCase : DelimiterCase(' ') {
 
-    override fun passesAdditionalChecks(s: String): Boolean {
-        return s.split(delimiter).all { it.first().isUpperCase() }
-    }
+    override fun passesAdditionalChecks(s: String): Boolean = s.split(delimiter).all { it.first().isUpperCase() }
 
-    override fun preparePart(s: String): String {
-
-        return s.cap()
-    }
+    override fun preparePart(s: String): String = s.cap()
 }

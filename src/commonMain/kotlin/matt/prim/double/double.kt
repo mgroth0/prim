@@ -10,9 +10,7 @@ import kotlin.math.floor
 fun Double.isNaNInfiniteOrZero() = isNaN() || isInfinite() || this == 0.0
 
 
-fun Double.isWholeNumber(): Boolean {
-    return ceil(this) == floor(this)
-}
+fun Double.isWholeNumber(): Boolean = ceil(this) == floor(this)
 
 
 fun Double.requireIsWholeNumber(): Double {

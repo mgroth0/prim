@@ -1,6 +1,5 @@
 @file:JvmName("ByteKtJvm")
 
-
 package matt.prim.byte
 
 import java.io.InputStream
@@ -11,15 +10,15 @@ import java.nio.channels.Channels
 import java.nio.channels.ReadableByteChannel
 import java.nio.channels.WritableByteChannel
 
-
 fun ByteArray.toFloat(order: ByteOrder) = ByteBuffer.wrap(this).order(order).float
+
 fun ByteArray.toDouble(order: ByteOrder) = ByteBuffer.wrap(this).order(order).double
 
-
 fun InputStream.efficientlyTransferTo(out: OutputStream) = Channels.newChannel(this).efficientlyTransferTo(out)
-fun ReadableByteChannel.efficientlyTransferTo(out: OutputStream) = efficientlyTransferTo(Channels.newChannel(out))
-fun InputStream.efficientlyTransferTo(out: WritableByteChannel) = Channels.newChannel(this).efficientlyTransferTo(out)
 
+fun ReadableByteChannel.efficientlyTransferTo(out: OutputStream) = efficientlyTransferTo(Channels.newChannel(out))
+
+fun InputStream.efficientlyTransferTo(out: WritableByteChannel) = Channels.newChannel(this).efficientlyTransferTo(out)
 
 /*
 * based on:
@@ -37,5 +36,3 @@ fun ReadableByteChannel.efficientlyTransferTo(out: WritableByteChannel) {
         out.write(buffer)
     }
 }
-
-

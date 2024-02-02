@@ -11,7 +11,7 @@ fun UByteArray.toHex() = joinToString("") { it.toHex() }
 fun Byte.toHex(): String {
     val isPositive = this > 0
     if (!isPositive) {
-        error("unclear what you want here with ${this}. Do you want like, -${toUByte().toHex()} or do you want to see the absolute hex?")
+        error("unclear what you want here with $this. Do you want like, -${toUByte().toHex()} or do you want to see the absolute hex?")
     }
     return toUByte().toHex()
     /*val v = (this and 0xFF.toByte()).toInt()

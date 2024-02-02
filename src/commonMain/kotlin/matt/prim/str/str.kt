@@ -16,9 +16,7 @@ import kotlin.random.Random
 /*a bit safer*/
 const val EMPTY_STRING = ""
 
-fun String.containsAny(vararg strings: String): Boolean {
-    return strings.any { contains(it) }
-}
+fun String.containsAny(vararg strings: String): Boolean = strings.any { contains(it) }
 
 /*like python!*/
 fun <T> String.join(
@@ -39,9 +37,7 @@ fun String.ensurePrefix(s: String) = s + removePrefix(s)
 
 fun String.removePrefixAndOrSuffix(s: String) = removePrefix(s).removeSuffix(s)
 
-fun String.replaceLastChar(new: String): String {
-    return replaceAt(indices.last, new)
-}
+fun String.replaceLastChar(new: String): String = replaceAt(indices.last, new)
 
 fun String.replaceAt(
     index: Int,
@@ -71,24 +67,18 @@ fun String.remove(vararg chars: Char) = run {
     r
 }
 
-fun String.shuffled(rand: Random = Random): String {
-    return toList().shuffled(rand).joinToString(separator = "") { it.toString() }
-}
+fun String.shuffled(rand: Random = Random): String = toList().shuffled(rand).joinToString(separator = "") { it.toString() }
 
-fun String.incEach(): String {
-    return string {
-        forEach {
-            +it.inc().toString()
-        }
+fun String.incEach(): String = string {
+    forEach {
+        +it.inc().toString()
     }
 }
 
 fun String.insertRandomly(
     char: Char,
     rand: Random = Random
-): String {
-    return StringBuilder(this).insert(rand.nextInt(0, length), char).toString()
-}
+): String = StringBuilder(this).insert(rand.nextInt(0, length), char).toString()
 
 fun String.lineIndexOfIndex(i: Int): Int {
 
@@ -135,13 +125,9 @@ fun String.lower() = lowercase()
 /*1.4: toLowerCase()*/
 fun String.upper() = uppercase()/*1.4: toUpperCase()*/
 
-infix fun String.loweq(s: String): Boolean {
-    return this.lower() == s.lower()
-}
+infix fun String.loweq(s: String): Boolean = this.lower() == s.lower()
 
-infix fun String.lowin(s: String): Boolean {
-    return this.lower() in s.lower()
-}
+infix fun String.lowin(s: String): Boolean = this.lower() in s.lower()
 
 infix fun String.lowinbi(s: String): Boolean {
     val l1 = this.lower()
@@ -242,16 +228,16 @@ fun String.substringAfterIth(
         return this
     } else {
         var next = 0
-        println("this=${this}")
-        println("num=${intNum}")
-        println("c=${c}")
+        println("this=$this")
+        println("num=$intNum")
+        println("c=$c")
         this.forEachIndexed { index, char ->
             if (char == c) {
                 next++
             }
-            println("char=${char}")
-            println("index=${index}")
-            println("next=${next}")
+            println("char=$char")
+            println("index=$index")
+            println("next=$next")
             if (next == intNum) {
                 println("returning!")
                 return this.substring(index + 1)
@@ -302,11 +288,9 @@ fun String.truncateWithElipsesOrAddSpaces(exactNumChars: Int): String {
 }
 
 
-fun String.truncateWithElipsesOrAddSpacesAsNeeded(allowableLengths: IntRange): String {
-    return if (this.length in allowableLengths) this
-    else if (this.length < allowableLengths.first) truncateWithElipsesOrAddSpaces(allowableLengths.first)
-    else truncateWithElipsesOrAddSpaces(allowableLengths.last)
-}
+fun String.truncateWithElipsesOrAddSpacesAsNeeded(allowableLengths: IntRange): String = if (this.length in allowableLengths) this
+else if (this.length < allowableLengths.first) truncateWithElipsesOrAddSpaces(allowableLengths.first)
+else truncateWithElipsesOrAddSpaces(allowableLengths.last)
 
 
 operator fun String.get(intRange: IntRange) = subSequence(intRange.first, intRange.last + 1)
@@ -333,8 +317,10 @@ class StringLineBuilder(private var s: String) {
 fun <T> T?.orBlank(op: (T) -> String = { toString() }) = this?.let { op(it) } ?: ""
 fun String.takeIfNotBlank() = takeIf { isNotBlank() }
 fun Iterable<String>.filterNotBlank() = filterNot { it.isBlank() }
+fun Sequence<String>.filterNotBlank() = filterNot { it.isBlank() }
 fun String.nonBlankLines() = lines().filterNotBlank()
 fun Iterable<String>.trimmed() = map { it.trim() }
+fun Sequence<String>.trimmed() = map { it.trim() }
 fun Iterable<String>.startingWith(prefix: String) = filter { it.startsWith(prefix) }
 
 
