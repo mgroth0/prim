@@ -5,7 +5,7 @@ import matt.prim.endian.MyByteOrder.LITTLE
 
 enum class MyByteOrder {
     BIG,
-    LITTLE,
+    LITTLE
     ;
 
     companion object {

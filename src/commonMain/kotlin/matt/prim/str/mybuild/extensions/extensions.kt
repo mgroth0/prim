@@ -15,7 +15,7 @@ fun StringDsl<Any?>.parenthesis(op: RootStringDsl<Any?>.() -> Unit) {
 
 fun StringColumnsDsl.expandableRow(
     shortValue: Any?,
-    possiblyLongValue: Any?,
+    possiblyLongValue: Any?
 ) {
     val secondsString = possiblyLongValue.toString()
     if (secondsString.lines().size > 1) {

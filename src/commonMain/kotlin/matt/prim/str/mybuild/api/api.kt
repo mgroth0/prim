@@ -5,9 +5,10 @@ import matt.lang.idea.ReportBuilder
 import matt.prim.str.mybuild.RootStringDslImpl
 
 fun string(op: RootStringDsl<Any?>.() -> Unit): String = RootStringDslImpl<Any?>().apply(op).string
-fun lineDelimitedString(op: LineDelimitedStringDsl<Any?>.() -> Unit): String = RootStringDslImpl<Any?>().apply {
-    lineDelimited(op)
-}.string
+fun lineDelimitedString(op: LineDelimitedStringDsl<Any?>.() -> Unit): String =
+    RootStringDslImpl<Any?>().apply {
+        lineDelimited(op)
+    }.string
 
 
 @DslMarker

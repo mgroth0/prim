@@ -7,9 +7,29 @@
       "path": ":k:lang"
     },
     {
+      "type": "Lib",
+      "cfg": "commonMainApi",
+      "key": "kotlinx-io-bytestring",
+      "note": "this is a microscopic library with no transitive dependencies. It might as well be standard lib. And its critically important. So yes, I want it everywhere."
+    },
+    {
+      "type": "Lib",
+      "cfg": "commonMainImplementation",
+      "key": "kotlinCrypto-endians"
+    },
+    {
+      "type": "Lib",
+      "cfg": "commonMainImplementation",
+      "key": "urlencoder"
+    },
+    {
       "type": "Project",
-      "cfg": "jvmTestImplementation",
+      "cfg": "commonTestImplementation",
       "path": ":k:test"
+    },{
+      "type": "Project",
+      "cfg": "androidInstrumentedTestImplementation",
+      "path": ":k:test:ainstrument"
     }
   ],
   "jvm": {
@@ -20,5 +40,5 @@
   "android": {
     "type": "Lib"
   },
-  "native": "LIB"
+  "native": {"type":"Lib"}
 }

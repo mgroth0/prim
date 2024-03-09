@@ -8,7 +8,7 @@ private val VOWELS_STRICT by lazy {
         'E',
         'I',
         'O',
-        'U',
+        'U'
     )
 }
 
@@ -32,8 +32,29 @@ val ALPHABET_ALL by lazy {
     ALPHABET_UPPER + ALPHABET_LOWER
 }
 val ALPHANUMERIC_ALL by lazy {
+
+    CharArray(3) { 'a' }.concatToString()
+
     ALPHABET_ALL + DIGIT_CHARS
 }
 
 val VOWELS_LOOSE = VOWELS_STRICT + 'Y'
 val CONSONANTS_STRICT = ALPHABET_UPPER.filter { it !in VOWELS_LOOSE }.toTypedArray()
+
+fun CharArray.toCharString() = CharString(this)
+
+class CharString(
+    input: CharArray
+) {
+    private val data = input.copyOf()
+
+    override fun equals(other: Any?): Boolean = other is CharString && data.contentEquals(other.data)
+
+    override fun hashCode(): Int = data.contentHashCode()
+
+    override fun toString(): String = "CharString(size=${data.size},chars=${data.joinToString(
+        prefix = "[",
+        postfix = "]"
+    ) { it.toString() }})"
+}
+

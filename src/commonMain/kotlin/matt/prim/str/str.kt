@@ -1,4 +1,3 @@
-@file:JvmName("StrJvmKt")
 
 package matt.prim.str
 
@@ -10,8 +9,12 @@ import matt.lang.assertions.require.requireOne
 import matt.lang.ktversion.isKotlin1_4OrEarlier
 import matt.prim.char.ALPHANUMERIC_ALL
 import matt.prim.str.mybuild.api.string
-import kotlin.jvm.JvmName
+import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import kotlin.random.Random
+
+
+fun String.urlEncode(): String = UrlEncoderUtil.encode(this)
+
 
 /*a bit safer*/
 const val EMPTY_STRING = ""
@@ -26,7 +29,7 @@ fun <T> String.join(
 
 
 fun Random.nextAlphanumericString(
-    length: Int,
+    length: Int
 ) = CharArray(length) {
     ALPHANUMERIC_ALL.random(this)
 }.concatToString()
@@ -44,36 +47,40 @@ fun String.replaceAt(
     new: String
 ): String {
     requireIn(index, indices)
-    val before = if (index == 0) {
-        ""
-    } else {
-        substring(0 until index)
-    }
-    val after = if (index == indices.last) {
-        ""
-    } else {
-        substring(index + 1..indices.last)
-    }
+    val before =
+        if (index == 0) {
+            ""
+        } else {
+            substring(0 until index)
+        }
+    val after =
+        if (index == indices.last) {
+            ""
+        } else {
+            substring(index + 1..indices.last)
+        }
     return before + new + after
 }
 
 fun String.remove(s: String) = replace(s, "")
 
-fun String.remove(vararg chars: Char) = run {
-    var r = this
-    chars.forEach {
-        r = r.replace(it.toString(), "")
+fun String.remove(vararg chars: Char) =
+    run {
+        var r = this
+        chars.forEach {
+            r = r.replace(it.toString(), "")
+        }
+        r
     }
-    r
-}
 
 fun String.shuffled(rand: Random = Random): String = toList().shuffled(rand).joinToString(separator = "") { it.toString() }
 
-fun String.incEach(): String = string {
-    forEach {
-        +it.inc().toString()
+fun String.incEach(): String =
+    string {
+        forEach {
+            +it.inc().toString()
+        }
     }
-}
 
 fun String.insertRandomly(
     char: Char,
@@ -125,12 +132,12 @@ fun String.lower() = lowercase()
 /*1.4: toLowerCase()*/
 fun String.upper() = uppercase()/*1.4: toUpperCase()*/
 
-infix fun String.loweq(s: String): Boolean = this.lower() == s.lower()
+infix fun String.loweq(s: String): Boolean = lower() == s.lower()
 
-infix fun String.lowin(s: String): Boolean = this.lower() in s.lower()
+infix fun String.lowin(s: String): Boolean = lower() in s.lower()
 
 infix fun String.lowinbi(s: String): Boolean {
-    val l1 = this.lower()
+    val l1 = lower()
     val l2 = s.lower()
     return l1 in l2 || l2 in l1
 }
@@ -166,7 +173,7 @@ class LineAppender(s: String = "") : DelimiterAppender(s) {
 
 
 fun Int.prependZeros(untilNumDigits: Int): String {
-    var s = this.toString()
+    var s = toString()
     while (s.length < untilNumDigits) {
         s = "0$s"
     }
@@ -224,14 +231,14 @@ fun String.substringAfterIth(
     num: Number
 ): String {
     val intNum = num.toInt()
-    if (this.count { it == c } < intNum) {
+    if (count { it == c } < intNum) {
         return this
     } else {
         var next = 0
         println("this=$this")
         println("num=$intNum")
         println("c=$c")
-        this.forEachIndexed { index, char ->
+        forEachIndexed { index, char ->
             if (char == c) {
                 next++
             }
@@ -240,7 +247,7 @@ fun String.substringAfterIth(
             println("next=$next")
             if (next == intNum) {
                 println("returning!")
-                return this.substring(index + 1)
+                return substring(index + 1)
             } else {
                 println("not returning")
             }
@@ -253,29 +260,29 @@ fun String.substringAfterIth(
 val String.hasWhiteSpace
     get() = " " in this || "\n" in this || "\r" in this
 
-fun String.toIntOrNullIfBlank() = if (isBlank()) null else this.toInt()
-fun String.toDoubleOrNullIfBlank() = if (isBlank()) null else this.toDouble()
-fun String.toBooleanOrNullIfBlank() = if (isBlank()) null else this.toBooleanStrict()
+fun String.toIntOrNullIfBlank() = if (isBlank()) null else toInt()
+fun String.toDoubleOrNullIfBlank() = if (isBlank()) null else toDouble()
+fun String.toBooleanOrNullIfBlank() = if (isBlank()) null else toBooleanStrict()
 
 
 fun String.truncate(maxChars: Int): String {
     if (length <= maxChars) return this
-    else return this.substring(0, maxChars)
+    else return substring(0, maxChars)
 }
 
 fun String.truncateWithElipses(maxChars: Int): String {
     if (length <= maxChars) return this
-    else return this.substring(0, maxChars) + " ..."
+    else return substring(0, maxChars) + " ..."
 }
 
 fun String.truncateOrAddSpaces(exactNumChars: Int): String {
-    if (length <= exactNumChars) return this.addSpacesUntilLengthIs(exactNumChars)
-    else return this.substring(0, exactNumChars)
+    if (length <= exactNumChars) return addSpacesUntilLengthIs(exactNumChars)
+    else return substring(0, exactNumChars)
 }
 
 fun String.truncateOrCenterInSpaces(exactNumChars: Int): String {
-    if (length <= exactNumChars) return this.addSpacesEvenlyUntilLengthIs(exactNumChars)
-    else return this.substring(0, exactNumChars)
+    if (length <= exactNumChars) return addSpacesEvenlyUntilLengthIs(exactNumChars)
+    else return substring(0, exactNumChars)
 }
 
 
@@ -283,14 +290,15 @@ const val elipses = " ..."
 fun String.truncateWithElipsesOrAddSpaces(exactNumChars: Int): String {
     val numCharsBeforeElipses = exactNumChars - 4
     requireGreaterThanOrEqualTo(numCharsBeforeElipses, 0)
-    if (length <= exactNumChars) return this.addSpacesUntilLengthIs(exactNumChars)
-    else return this.substring(0, numCharsBeforeElipses) + elipses
+    if (length <= exactNumChars) return addSpacesUntilLengthIs(exactNumChars)
+    else return substring(0, numCharsBeforeElipses) + elipses
 }
 
 
-fun String.truncateWithElipsesOrAddSpacesAsNeeded(allowableLengths: IntRange): String = if (this.length in allowableLengths) this
-else if (this.length < allowableLengths.first) truncateWithElipsesOrAddSpaces(allowableLengths.first)
-else truncateWithElipsesOrAddSpaces(allowableLengths.last)
+fun String.truncateWithElipsesOrAddSpacesAsNeeded(allowableLengths: IntRange): String =
+    if (length in allowableLengths) this
+    else if (length < allowableLengths.first) truncateWithElipsesOrAddSpaces(allowableLengths.first)
+    else truncateWithElipsesOrAddSpaces(allowableLengths.last)
 
 
 operator fun String.get(intRange: IntRange) = subSequence(intRange.first, intRange.last + 1)
@@ -298,8 +306,9 @@ fun String.throttled() = "THROTTLED STRING OF LENGTH $length (\"${this[0..100]}\
 
 fun String.toHyphenCase(): String {
     if (isBlank()) return this
-    return this[0].lowercase() + toCharArray().map { it.toString() }.drop(1)
-        .joinToString(separator = "") { if (it[0].isUpperCase()) "-${it[0].lowercase()}" else it }
+    return this[0].lowercase() +
+        toCharArray().map { it.toString() }.drop(1)
+            .joinToString(separator = "") { if (it[0].isUpperCase()) "-${it[0].lowercase()}" else it }
 }
 
 class StringLineBuilder(private var s: String) {
@@ -387,7 +396,6 @@ operator fun String.times(n: Int): String {
             r
         }
     }
-
 }
 
 operator fun Char.times(n: Int): String {
@@ -404,11 +412,15 @@ fun String.isFloat() = toFloatOrNull() != null
 
 /*kinda how JetBrains wants us to do it*/
 fun String.cap() =
-    replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }/*if I go back to 1.4: this.capitalize()*/
+    replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+
+/*if I go back to 1.4: this.capitalize()
 
 
-/*kinda how JetBrains wants us to do it*/
-fun String.decap() = replaceFirstChar { it.lowercase() }/*if I go back to 1.4: this.decapitalize()*/
+kinda how JetBrains wants us to do it*/
+
+
+fun String.decap() = replaceFirstChar { it.lowercase() } /*if I go back to 1.4: this.decapitalize()*/
 
 
 fun String.numberOf(char: Char) = count { it == char }
@@ -447,3 +459,5 @@ fun joinWithNewLines(lines: List<String>) = lines.joinWithNewLines()
 
 fun joinWithNewLinesAndIndent(vararg lines: String) = lines.joinWithNewLines().indent()
 fun joinWithNewLinesAndIndent(lines: List<String>) = lines.joinWithNewLines().indent()
+
+

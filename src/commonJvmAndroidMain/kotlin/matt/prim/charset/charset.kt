@@ -1,6 +1,6 @@
 package matt.prim.charset
 
-import matt.lang.charset.DEFAULT_CHARSET
+import matt.lang.charset.j.DEFAULT_CHARSET
 import java.nio.charset.CharsetDecoder
 
 

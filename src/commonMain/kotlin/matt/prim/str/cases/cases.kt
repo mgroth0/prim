@@ -1,9 +1,9 @@
 package matt.prim.str.cases
 
 import matt.lang.anno.SeeURL
-import matt.lang.platform.OS
-import matt.lang.platform.Unix
-import matt.lang.platform.Windows
+import matt.lang.platform.common.Unix
+import matt.lang.platform.common.Windows
+import matt.lang.platform.os.OS
 import matt.prim.str.cap
 import matt.prim.str.decap
 import matt.prim.str.hasWhiteSpace
@@ -31,8 +31,8 @@ sealed class EnforcingStringCase : StringCase {
     final override fun split(s: String): List<String> {
         require(isInThisCase(s)) {
             """
-Could not split string as $this
-Input="$s"
+            Could not split string as $this
+            Input="$s"
             """.trimIndent()
         }
         return splitImpl(s)
@@ -45,12 +45,11 @@ Input="$s"
         val r = joinImpl(strings)
         require(isInThisCase(r)) {
             """
-Failed to correctly construct $this string
-Input(${strings.size}):
-${strings.joinToString("\n") { "\t$it" }}
-Output="$r"
+            Failed to correctly construct $this string
+            Input(${strings.size}):
+            ${strings.joinToString("\n") { "\t$it" }}
+            Output="$r"
             """.trimIndent()
-
         }
         return r
     }
@@ -74,7 +73,7 @@ abstract class CamelCase(private val capFirst: Boolean) : EnforcingStringCase() 
             if (isUpper && lastWasUpper) {
                 println(
                     """
-                WARNING: If I allow upper case letters to touch, then camelCase can no longer be converted correctly between it and snake case without errors, because there is ambiguity when converting from snake case to camel case. See links above where people tend to agree that this touching uppers cannot be allowed.
+                    WARNING: If I allow upper case letters to touch, then camelCase can no longer be converted correctly between it and snake case without errors, because there is ambiguity when converting from snake case to camel case. See links above where people tend to agree that this touching uppers cannot be allowed.
                     """.trimIndent()
                 )
                 return false
@@ -116,8 +115,9 @@ abstract class CamelCase(private val capFirst: Boolean) : EnforcingStringCase() 
     final override fun joinImpl(strings: List<String>): String {
         var r = ""
         strings.forEachIndexed { index, s ->
-            r += if (!capFirst && index == 0) s.decap()
-            else s.cap()
+            r +=
+                if (!capFirst && index == 0) s.decap()
+                else s.cap()
         }
         return r
     }
@@ -145,7 +145,8 @@ abstract class DelimiterCase(
         if (s.first() == delimiter) return false
         if (toCheck.any {
                 !it.isLetterOrDigit()
-            }) return false
+            }
+        ) return false
         var lastWasDelim = false
         s.forEach {
             val isDelim = it == delimiter
@@ -157,9 +158,10 @@ abstract class DelimiterCase(
 
     protected open fun passesAdditionalChecks(s: String): Boolean = true
 
-    final override fun joinImpl(strings: List<String>): String = strings.joinToString(separator = delimiterString) {
-        preparePart(it)
-    }
+    final override fun joinImpl(strings: List<String>): String =
+        strings.joinToString(separator = delimiterString) {
+            preparePart(it)
+        }
 
     protected open fun preparePart(s: String): String = s
 
@@ -186,7 +188,6 @@ object TrainCase : DelimiterCase('-') {
     override fun passesAdditionalChecks(s: String): Boolean = s.split(delimiter).all { it.first().isUpperCase() }
 
     override fun preparePart(s: String): String = s.cap()
-
 }
 
 sealed class FileCase(delimiter: Char) : DelimiterCase(
@@ -195,10 +196,11 @@ sealed class FileCase(delimiter: Char) : DelimiterCase(
 
 object UnixFileCase : FileCase('/')
 object PlatformFileCase : FileCase(
-    delimiter = when (OS) {
-        is Unix -> '/'
-        Windows -> '\\'
-    }
+    delimiter =
+        when (OS) {
+            is Unix -> '/'
+            Windows -> '\\'
+        }
 )
 
 @SeeURL("https://www.wikiwand.com/en/Title_case")

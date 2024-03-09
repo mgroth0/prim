@@ -29,11 +29,12 @@ interface StringListConverter<T> : BiConverter<StringList, T> {
     @Open
     override fun convertToB(a: StringList) = fromStringList(a)
     @Open
-    fun emptyIsNull(): StringListConverter<T?> = object : StringListConverter<T?> {
-        override fun toStringList(t: T?): StringList = if (t == null) emptyList() else this@StringListConverter.toStringList(t)
+    fun emptyIsNull(): StringListConverter<T?> =
+        object : StringListConverter<T?> {
+            override fun toStringList(t: T?): StringList = if (t == null) emptyList() else this@StringListConverter.toStringList(t)
 
-        override fun fromStringList(s: StringList): T? = if (s.isEmpty()) null else this@StringListConverter.fromStringList(s)
-    }
+            override fun fromStringList(s: StringList): T? = if (s.isEmpty()) null else this@StringListConverter.fromStringList(s)
+        }
 }
 
 
@@ -51,14 +52,12 @@ interface StringConverter<T> : BiConverter<String, T> {
     fun asSingularStringListConverter() = StringListConverter.fromStringConverterAsSingular(this)
 
     @Open
-    fun nullAsBlank() = object : BiConverter<String, T?> {
-        override fun convertToB(a: String): T? = a.takeIfNotBlank()?.toB()
+    fun nullAsBlank() =
+        object : BiConverter<String, T?> {
+            override fun convertToB(a: String): T? = a.takeIfNotBlank()?.toB()
 
-        override fun convertToA(b: T?): String = b?.toA() ?: ""
-
-
-    }
-
+            override fun convertToA(b: T?): String = b?.toA() ?: ""
+        }
 }
 
 
@@ -83,10 +82,10 @@ class StringListByElementConverter<T>(private val elementConverter: StringConver
 class StringListBySingleElementConverter<T>(private val elementConverter: StringConverter<T>) : StringListConverter<T> {
     override fun toStringList(t: T): StringList = listOf(elementConverter.toString(t))
 
-    override fun fromStringList(s: StringList): T = elementConverter.fromString(
-        s.singleOrNull() ?: error("only 1 element allowed, but got ${s.size}: ${s.elementsToString()}")
-    )
-
+    override fun fromStringList(s: StringList): T =
+        elementConverter.fromString(
+            s.singleOrNull() ?: error("only 1 element allowed, but got ${s.size}: ${s.elementsToString()}")
+        )
 }
 
 class StringListBySingleElementOrNullConverter<T>(private val elementConverter: StringConverter<T>) :
@@ -102,7 +101,6 @@ class StringListBySingleElementOrNullConverter<T>(private val elementConverter: 
             s.singleOrNull() ?: error("only 0-1 elements allowed, but got ${s.size}: ${s.elementsToString()}")
         )
     }
-
 }
 
 

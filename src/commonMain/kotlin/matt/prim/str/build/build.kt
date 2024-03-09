@@ -4,7 +4,7 @@ import matt.prim.str.times
 
 fun StringBuilder.appendLine(
     tabs: Int,
-    string: String,
+    string: String
 ) = appendLine('\t' * tabs + string)
 
 val StringBuilder.t get() = append('\t')

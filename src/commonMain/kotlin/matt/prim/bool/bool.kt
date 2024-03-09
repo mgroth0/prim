@@ -1,8 +1,7 @@
-@file:JvmName("BoolCommonKt")
 
 package matt.prim.bool
 
-import kotlin.jvm.JvmName
+import matt.prim.bytestr.toByteString
 
 fun Byte.toBooleanStrict() =
     when (this) {
@@ -61,3 +60,7 @@ fun ULong.toBooleanStrict() =
     }
 
 private fun illegalBooleanValue(value: Any): Nothing = error("A strict Boolean value must be a 0 or a 1, not $value")
+
+
+fun Boolean.toByteString() = toByteArray().toByteString()
+fun Boolean.toByteArray() = byteArrayOf(if (this) 1.toByte() else 0.toByte())

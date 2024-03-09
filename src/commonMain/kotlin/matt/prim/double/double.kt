@@ -1,8 +1,9 @@
-@file:JvmName("DoubleCommonKt")
 
 package matt.prim.double
 
-import kotlin.jvm.JvmName
+import matt.prim.bytestr.toByteString
+import matt.prim.endian.MyByteOrder
+import matt.prim.long.toByteArray
 import kotlin.math.ceil
 import kotlin.math.floor
 
@@ -27,3 +28,16 @@ fun Double.verifyWholeToInt(): Int {
 
 
 
+const val DOUBLE_BYTE_LEN = 8
+
+
+const val JAVA_DOES_CANONICALIZE_NAN = false
+
+fun Double.toByteString(order: MyByteOrder, canonicalizeNaN: Boolean) = toByteArray(order, canonicalizeNaN = canonicalizeNaN).toByteString()
+fun Double.toByteArray(
+    order: MyByteOrder,
+    canonicalizeNaN: Boolean
+): ByteArray {
+    val bits = if (canonicalizeNaN) toBits() else toRawBits()
+    return bits.toByteArray(order)
+}

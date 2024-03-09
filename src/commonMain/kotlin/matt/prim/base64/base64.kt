@@ -2,8 +2,10 @@
 
 package matt.prim.base64
 
-import matt.lang.NEVER
 import matt.lang.anno.Related
+import matt.lang.anno.SeeURL
+import matt.lang.common.NEVER
+import matt.prim.str.remove
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 import kotlin.math.ceil
@@ -28,7 +30,7 @@ private object Base64Ratio {
 
 fun String.decodeFromBase64UpToNBytes(n: Int): ByteArray {
     val numCharsToDecode = ceil(n / Base64Ratio.BYTES.toDouble()).toInt() * Base64Ratio.CHARS
-    val s = this.take(numCharsToDecode)
+    val s = take(numCharsToDecode)
     val decoded = s.decodeFromBase64()
     val decodedSize = decoded.size
     return when {
@@ -51,5 +53,8 @@ fun String.decodeFromBase64UpToNBytes(n: Int): ByteArray {
 fun String.encodeToURLBase64() = encodeToByteArray().encodeToURLBase64()
 fun String.decodeFromURLBase64() = encodeToByteArray().decodeFromURLBase64()
 fun String.decodeFromURLBase64AsString() = decodeFromURLBase64().decodeToString()
-/*String(decodeFromURLBase64(), DEFAULT_CHARSET)*/
 
+@SeeURL("https://github.com/Kotlin/KEEP/issues/373")
+private const val PADDING_CHAR = '='
+fun ByteArray.encodeToBase64WithoutPadding(): String = encodeToBase64().remove(PADDING_CHAR)
+fun ByteArray.encodeToURLBase64WithoutPadding(): String = encodeToURLBase64().remove(PADDING_CHAR)

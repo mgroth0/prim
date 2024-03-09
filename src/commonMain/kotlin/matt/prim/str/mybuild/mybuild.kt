@@ -40,12 +40,12 @@ internal abstract class MyStringDsl<T> : StringDslBase<T>() {
 
     protected fun delimited(
         tempDelim: Char,
-        op: MyStringDsl<T>.() -> Unit,
+        op: MyStringDsl<T>.() -> Unit
     ) = delimited(tempDelim.toString(), op)
 
     private fun delimited(
         tempDelim: String,
-        op: MyStringDsl<T>.() -> Unit,
+        op: MyStringDsl<T>.() -> Unit
     ) {
         applySubDsl(DelimitedStringDsl<T>(tempDelim), op)
     }
@@ -58,7 +58,7 @@ internal abstract class MyStringDsl<T> : StringDslBase<T>() {
 
     protected fun <D : StringDsl<*>> applySubDsl(
         subDsl: D,
-        buildOp: Dsl<D>,
+        buildOp: Dsl<D>
     ) {
         subDsl.apply(buildOp)
         appendString(subDsl.string)

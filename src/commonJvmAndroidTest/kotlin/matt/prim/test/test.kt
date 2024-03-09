@@ -3,9 +3,9 @@ package matt.prim.test
 import matt.prim.base64.decodeFromBase64
 import matt.prim.base64.encodeToBase64
 import matt.prim.byte.hex.toHex
+import matt.prim.endian.MyByteOrder.BIG
 import matt.prim.ushort.toByteArray
 import matt.test.assertions.JupiterTestAssertions.assertRunsInOneMinute
-import java.nio.ByteOrder
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
@@ -16,29 +16,29 @@ class PrimTests {
         assertRunsInOneMinute {
             assertEquals(
                 "01",
-                0x00000001.toByte().toHex(),
+                0x00000001.toByte().toHex()
             )
 
             assertEquals(
                 "01",
-                0x01.toByte().toHex(),
+                0x01.toByte().toHex()
             )
             assertEquals(
                 "10",
-                0x10.toByte().toHex(),
+                0x10.toByte().toHex()
             )
 
             assertEquals(
                 "10",
-                0x10u.toUByte().toHex(),
+                0x10u.toUByte().toHex()
             )
             assertEquals(
                 "FF",
-                UByte.MAX_VALUE.toHex(),
+                UByte.MAX_VALUE.toHex()
             )
             assertEquals(
                 "FF",
-                0xFFu.toUByte().toHex(),
+                0xFFu.toUByte().toHex()
             )
         }
 
@@ -47,7 +47,7 @@ class PrimTests {
         assertRunsInOneMinute {
             assertContentEquals(
                 byteArrayOf(0, 1),
-                1.toUShort().toByteArray(ByteOrder.BIG_ENDIAN),
+                1.toUShort().toByteArray(BIG)
             )
         }
 
