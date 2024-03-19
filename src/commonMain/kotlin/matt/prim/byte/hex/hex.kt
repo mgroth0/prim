@@ -6,6 +6,7 @@ private val hexArray = "0123456789ABCDEF".toCharArray()
 
 @Related(34872983)
 fun ByteArray.toHex() = joinToString("") { it.toHex() }
+@OptIn(ExperimentalUnsignedTypes::class)
 fun UByteArray.toHex() = joinToString("") { it.toHex() }
 
 fun Byte.toHex(): String {
